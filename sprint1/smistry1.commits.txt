@@ -1,0 +1,102 @@
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  1) <!DOCTYPE html>
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  2) <html lang="en">
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  3)   <head>
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  4)     <meta charset="utf-8" />
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  5)     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  6)     <link rel="stylesheet" href="./styles.css">
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  7)     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  8)     <meta name="viewport" content="width=device-width, initial-scale=1" />
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  9)     <meta name="theme-color" content="#000000" />
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 10)     <title>SPVS</title>
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 11)   </head>
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 12)   <body>
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 13)     <script src="../src/index.js" type="text/jsx" ></script>
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 14)     <div id="root"></div>
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 15)   </body>
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 16) </html>
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  1) html {
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  2)     font-family: 'Montserrat', sans-serif;
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  3) }
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  4) 
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  5) body {
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  6)     background-color: #FDEEDC;
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  7) }
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  8) 
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  9) header {
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 10)     background-color: #F1A661;
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 11)     text-align: center;
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 12)     padding: 25px;
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 13)     border-radius: 20px;
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 14) }
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 15) 
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 16) input[type=text] {
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 17)     padding: 8px;
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 18) }
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 19) 
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 20) input[type=submit] {
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 21)     background-color: #F1A661;
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 22)     border-style: solid;
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 23)     border-color: #F1A661;
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 24)     padding: 10px 35px;
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 25)     border-radius: 10px;
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 26) }
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 27) .submit-style {
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 28)     padding: 2% 45%;
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 29) }
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 30) .form-style {
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 31)     background-color: #E38B29;
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 32)     margin-top: 20px;
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 33)     font-size: 1.3rem;
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 34)     border-radius: 20px;
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 35)     padding: 2% 35%;
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 36) }
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 1) import React from 'react';
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 2) import ReactDOM from 'react-dom/client';
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 3) import App from './components/App.jsx';
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 4) 
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 5) const root = ReactDOM.createRoot(document.getElementById('root'));
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 6) root.render(
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 7)   <App />
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 8) );
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 9) 
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  1) import React from 'react';
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  2) import Header from './Header.jsx';
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  3) import Ip from './Ip.jsx';
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  4) 
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  5) function App() {
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  6)     return (
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  7)         <div>
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  8)             <Header />
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  9)             <Ip />
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 10)         </div>
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 11)     );
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 12) }
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 13) 
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 14) export default App;
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  1) import React from 'react';
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  2) 
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  3) function Header() {
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  4)     return (
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  5)         <header>
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  6)            <h1> SPVS </h1>
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  7)            <h2> Simple Port and Vulnerability Scanner </h2> 
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  8)         </header>
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  9)     );
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 10) }
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 11) 
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 12) export default Header;
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  1) import React from "react";
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  2) 
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  3) function Ip() {
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  4)     return (
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  5)         <div>
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  6)             <form className="form-style" m>
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  7)                 <label> Enter IP Address: </label>
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  8)                 <input type="text" id="ip" placeholder="Enter IP here"></input><br />   
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400  9)             </form>
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 10)             <div className="submit-style"><input type="submit"></input></div>
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 11)         </div>
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 12)     );
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 13) }
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 14) 
+76b4f33c9c (Shivam Mistry 2022-10-13 17:58:48 -0400 15) export default Ip;
