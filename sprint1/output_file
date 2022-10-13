@@ -1,0 +1,48 @@
+5a0630c61c (codyb42 2022-10-13 08:11:57 -0400  1) <!-- 
+bc58e33a12 (codyb42 2022-10-12 18:42:14 -0400  2) Online HTML, CSS and JavaScript editor to run code online.
+bc58e33a12 (codyb42 2022-10-12 18:42:14 -0400  3) -->
+bc58e33a12 (codyb42 2022-10-12 18:42:14 -0400  4) <!DOCTYPE html>
+bc58e33a12 (codyb42 2022-10-12 18:42:14 -0400  5) <html lang="en">
+bc58e33a12 (codyb42 2022-10-12 18:42:14 -0400  6) 
+bc58e33a12 (codyb42 2022-10-12 18:42:14 -0400  7) <head>
+bc58e33a12 (codyb42 2022-10-12 18:42:14 -0400  8)   <meta charset="UTF-8" />
+bc58e33a12 (codyb42 2022-10-12 18:42:14 -0400  9)   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+5a0630c61c (codyb42 2022-10-13 08:11:57 -0400 10)   <link rel="stylesheet" href="css/style.css" />
+bc58e33a12 (codyb42 2022-10-12 18:42:14 -0400 11)   <title>SPVS</title>
+bc58e33a12 (codyb42 2022-10-12 18:42:14 -0400 12) </head>
+bc58e33a12 (codyb42 2022-10-12 18:42:14 -0400 13) 
+bc58e33a12 (codyb42 2022-10-12 18:42:14 -0400 14) <body>
+5a0630c61c (codyb42 2022-10-13 08:11:57 -0400 15)   <img src = "spvs-high-resolution-logo.png" class = "title"> 
+bc58e33a12 (codyb42 2022-10-12 18:42:14 -0400 16)   <p> Our easy to use simple port vulnerablity scanner<p>
+5a0630c61c (codyb42 2022-10-13 08:11:57 -0400 17)   <input id = "search_box">
+5a0630c61c (codyb42 2022-10-13 08:11:57 -0400 18)   <input class = "search_button" type="button" value = "search"> 
+5a0630c61c (codyb42 2022-10-13 08:11:57 -0400 19)   <script src="script.js"></script>
+bc58e33a12 (codyb42 2022-10-12 18:42:14 -0400 20) </body>
+bc58e33a12 (codyb42 2022-10-12 18:42:14 -0400 21) 
+acc4c91e77 (codyb42 2022-10-12 17:17:01 -0400 22) </html>
+cffa7011f2 (codyb42 2022-10-12 18:43:26 -0400  1) body {
+cffa7011f2 (codyb42 2022-10-12 18:43:26 -0400  2) 	text-align: center; 
+cffa7011f2 (codyb42 2022-10-12 18:43:26 -0400  3)   	font-family: Arial, sans-serif;
+cffa7011f2 (codyb42 2022-10-12 18:43:26 -0400  4) }
+2fbcd76eb1 (codyb42 2022-10-13 08:10:46 -0400  5) .search_button {
+2fbcd76eb1 (codyb42 2022-10-13 08:10:46 -0400  6)  	background-color: #50A060;
+2fbcd76eb1 (codyb42 2022-10-13 08:10:46 -0400  7)   	border: 1px solid #50A060;
+2fbcd76eb1 (codyb42 2022-10-13 08:10:46 -0400  8)   	padding: 10px;
+2fbcd76eb1 (codyb42 2022-10-13 08:10:46 -0400  9)   	font-size: 14pt;
+cffa7011f2 (codyb42 2022-10-12 18:43:26 -0400 10)   	color: white;
+2fbcd76eb1 (codyb42 2022-10-13 08:10:46 -0400 11)   transition: all .25s ease;
+2fbcd76eb1 (codyb42 2022-10-13 08:10:46 -0400 12) }
+2fbcd76eb1 (codyb42 2022-10-13 08:10:46 -0400 13) .search_button:hover{
+2fbcd76eb1 (codyb42 2022-10-13 08:10:46 -0400 14)   color: #50A060;
+2fbcd76eb1 (codyb42 2022-10-13 08:10:46 -0400 15)   border: 1px solid #50A060;
+2fbcd76eb1 (codyb42 2022-10-13 08:10:46 -0400 16)   background-color: white;
+2fbcd76eb1 (codyb42 2022-10-13 08:10:46 -0400 17) }
+2fbcd76eb1 (codyb42 2022-10-13 08:10:46 -0400 18) #search_box {
+2fbcd76eb1 (codyb42 2022-10-13 08:10:46 -0400 19)  	height:30px;
+2fbcd76eb1 (codyb42 2022-10-13 08:10:46 -0400 20) 	font-size:14pt; 
+2fbcd76eb1 (codyb42 2022-10-13 08:10:46 -0400 21) }
+2fbcd76eb1 (codyb42 2022-10-13 08:10:46 -0400 22) .title{
+2fbcd76eb1 (codyb42 2022-10-13 08:10:46 -0400 23) 	width: 500px;
+2fbcd76eb1 (codyb42 2022-10-13 08:10:46 -0400 24) 	height: auto;
+cffa7011f2 (codyb42 2022-10-12 18:43:26 -0400 25) }
+72c951a97c (codyb42 2022-10-12 18:43:03 -0400 1) console.log("from script file");
