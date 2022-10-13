@@ -19,3 +19,40 @@
 41a371f6c6 (SaishMalluri 2022-10-13 01:53:17 -0400 19)     {
 f28eaddf3b (SaishMalluri 2022-10-13 17:29:04 -0400 20)         cout << "Scanning " << address << "...\n" << "Port " << ports[i] << " : " << endl;
 41a371f6c6 (SaishMalluri 2022-10-13 01:53:17 -0400 21)         if (port_is_open(address, i))
+41a371f6c6 (SaishMalluri 2022-10-13 01:53:17 -0400 22)         {
+41a371f6c6 (SaishMalluri 2022-10-13 01:53:17 -0400 23)             cout << "OPEN" << endl;
+41a371f6c6 (SaishMalluri 2022-10-13 01:53:17 -0400 24)         }
+41a371f6c6 (SaishMalluri 2022-10-13 01:53:17 -0400 25) 
+41a371f6c6 (SaishMalluri 2022-10-13 01:53:17 -0400 26)         else
+41a371f6c6 (SaishMalluri 2022-10-13 01:53:17 -0400 27)         {
+41a371f6c6 (SaishMalluri 2022-10-13 01:53:17 -0400 28)             cout << "CLOSED" << endl;
+41a371f6c6 (SaishMalluri 2022-10-13 01:53:17 -0400 29)         }
+41a371f6c6 (SaishMalluri 2022-10-13 01:53:17 -0400 30)     }
+41a371f6c6 (SaishMalluri 2022-10-13 01:53:17 -0400 31) }
+41a371f6c6 (SaishMalluri 2022-10-13 01:53:17 -0400 32) 
+41a371f6c6 (SaishMalluri 2022-10-13 01:53:17 -0400 33) int main(int argc, char ** argv)
+41a371f6c6 (SaishMalluri 2022-10-13 01:53:17 -0400 34) {
+41a371f6c6 (SaishMalluri 2022-10-13 01:53:17 -0400 35)     vector<int> ports;
+41a371f6c6 (SaishMalluri 2022-10-13 01:53:17 -0400 36)     int port;
+f28eaddf3b (SaishMalluri 2022-10-13 17:29:04 -0400 37)     string address;
+41a371f6c6 (SaishMalluri 2022-10-13 01:53:17 -0400 38) 
+f28eaddf3b (SaishMalluri 2022-10-13 17:29:04 -0400 39)     //Address that is used for scanning
+f28eaddf3b (SaishMalluri 2022-10-13 17:29:04 -0400 40)     cout << "Please enter address: ";
+f28eaddf3b (SaishMalluri 2022-10-13 17:29:04 -0400 41)     getline(cin,address);
+f28eaddf3b (SaishMalluri 2022-10-13 17:29:04 -0400 42)     cout << endl;
+41a371f6c6 (SaishMalluri 2022-10-13 01:53:17 -0400 43) 
+f28eaddf3b (SaishMalluri 2022-10-13 17:29:04 -0400 44)     cout << "Please enter the ports that you would like to be scanned: " << endl;
+f28eaddf3b (SaishMalluri 2022-10-13 17:29:04 -0400 45)     //Getting all the ports that you want to scan
+f28eaddf3b (SaishMalluri 2022-10-13 17:29:04 -0400 46)     while(true)
+41a371f6c6 (SaishMalluri 2022-10-13 01:53:17 -0400 47)     {
+f28eaddf3b (SaishMalluri 2022-10-13 17:29:04 -0400 48)         if(!(cin >> port))
+41a371f6c6 (SaishMalluri 2022-10-13 01:53:17 -0400 49)         {
+f28eaddf3b (SaishMalluri 2022-10-13 17:29:04 -0400 50)             break;
+41a371f6c6 (SaishMalluri 2022-10-13 01:53:17 -0400 51)         }
+f28eaddf3b (SaishMalluri 2022-10-13 17:29:04 -0400 52)         ports.push_back(port);
+41a371f6c6 (SaishMalluri 2022-10-13 01:53:17 -0400 53)     }
+f28eaddf3b (SaishMalluri 2022-10-13 17:29:04 -0400 54)     
+f28eaddf3b (SaishMalluri 2022-10-13 17:29:04 -0400 55)     scan(address,ports);
+f28eaddf3b (SaishMalluri 2022-10-13 17:29:04 -0400 56) 
+41a371f6c6 (SaishMalluri 2022-10-13 01:53:17 -0400 57)     return 0;
+41a371f6c6 (SaishMalluri 2022-10-13 01:53:17 -0400 58) }
