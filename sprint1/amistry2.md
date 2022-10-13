@@ -14,6 +14,9 @@ Name: Ankit Mistry; Github ID: ankitm28; Group Name: SPVS
 ### What problems you encountered
 This sprint was a major rollercoaster for me. First of all, I was sick so I couldn't work on the project as much as I intended. Other than that, I struggled to understand how the SFML library works and how to integrate it into my code, which required special tool called CMake to do that.
 
+### Issues you worked on
+  * [[#1] https://github.com/masonhyman-school/spvs/issues/7](https://github.com/masonhyman-school/spvs/issues/7) 
+
 ### Files you worked on
   * spvs/spvs_cli/src/port_scanner.cpp
 
