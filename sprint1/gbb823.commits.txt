@@ -1,0 +1,114 @@
+5626826853 spvs_cli/spvs.cpp     (Mason Hyman 2022-10-12 11:48:44 -0400   1) #include <iostream>
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400   2) #include <fstream>
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400   3) #include <list>
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400   4) #include <vector>
+8ef94ca0c8 spvs_cli/src/main.cpp (Mason Hyman 2022-10-13 00:30:13 -0400   5) #include <thread>
+5ec07d2b31 spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 13:59:16 -0400   6) #include <SFML/Network.hpp>
+5626826853 spvs_cli/spvs.cpp     (Mason Hyman 2022-10-12 11:48:44 -0400   7) 
+5626826853 spvs_cli/spvs.cpp     (Mason Hyman 2022-10-12 11:48:44 -0400   8) using namespace std;
+5626826853 spvs_cli/spvs.cpp     (Mason Hyman 2022-10-12 11:48:44 -0400   9) 
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  10) void print_usage() {
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  11) 	cerr <<  "Usage: spvs [Options] {target specification}" << endl
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  12) 		 << "TARGET SPECIFICATION:" << endl
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  13) 		 << "    -f <input file name>: Input from list of hosts." << endl;
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  14) }
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  15) 
+39d89d468b spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 16:29:34 -0400  16) static bool port_is_open(const string& address, int port) {
+8ef94ca0c8 spvs_cli/src/main.cpp (Mason Hyman 2022-10-13 00:30:13 -0400  17) 	return (sf::TcpSocket().connect(sf::IpAddress::resolve(address).value(), port, sf::milliseconds(100)) == sf::Socket::Status::Done);
+8ef94ca0c8 spvs_cli/src/main.cpp (Mason Hyman 2022-10-13 00:30:13 -0400  18) }
+8ef94ca0c8 spvs_cli/src/main.cpp (Mason Hyman 2022-10-13 00:30:13 -0400  19) 
+8ef94ca0c8 spvs_cli/src/main.cpp (Mason Hyman 2022-10-13 00:30:13 -0400  20) void threaded_port_is_open(const string& address, int port, vector<bool>& status) {
+8ef94ca0c8 spvs_cli/src/main.cpp (Mason Hyman 2022-10-13 00:30:13 -0400  21) 	cout << address << endl;	
+8ef94ca0c8 spvs_cli/src/main.cpp (Mason Hyman 2022-10-13 00:30:13 -0400  22) 	if(sf::TcpSocket().connect(sf::IpAddress::resolve(address).value(), port) == sf::Socket::Status::Done) {
+8ef94ca0c8 spvs_cli/src/main.cpp (Mason Hyman 2022-10-13 00:30:13 -0400  23) 		status.at(port) = 1;
+8ef94ca0c8 spvs_cli/src/main.cpp (Mason Hyman 2022-10-13 00:30:13 -0400  24) 	}
+39d89d468b spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 16:29:34 -0400  25) }
+39d89d468b spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 16:29:34 -0400  26) 
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  27) void port_scan(const string& address, int ports) {
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  28) 	vector <bool> open_ports(ports+1, false);
+8ef94ca0c8 spvs_cli/src/main.cpp (Mason Hyman 2022-10-13 00:30:13 -0400  29) 	vector <thread *> threads;
+8ef94ca0c8 spvs_cli/src/main.cpp (Mason Hyman 2022-10-13 00:30:13 -0400  30) 
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  31) 	bool host_online = false;
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  32) 	
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  33) 	for (int i = 1; i <= ports; i++) {
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  34) 		if (port_is_open(address, i)) {
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  35) 			host_online = true;
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  36) 			open_ports.at(i) = true;
+b74f4596ab spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 23:10:21 -0400  37) 			cout << "PORT " << i << " IS OPEN\n";
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  38) 		} 	
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  39) 	}
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  40) 
+8ef94ca0c8 spvs_cli/src/main.cpp (Mason Hyman 2022-10-13 00:30:13 -0400  41) //	for (int i = 1; i <= ports; i++) threads.push_back(new thread(threaded_port_is_open, ref(address), i, ref(open_ports)));
+8ef94ca0c8 spvs_cli/src/main.cpp (Mason Hyman 2022-10-13 00:30:13 -0400  42) //	for (int i = 1; i <= ports; i++) {
+8ef94ca0c8 spvs_cli/src/main.cpp (Mason Hyman 2022-10-13 00:30:13 -0400  43) //		threads[i]->join();
+8ef94ca0c8 spvs_cli/src/main.cpp (Mason Hyman 2022-10-13 00:30:13 -0400  44) //		delete threads[i];
+8ef94ca0c8 spvs_cli/src/main.cpp (Mason Hyman 2022-10-13 00:30:13 -0400  45) //	}
+8ef94ca0c8 spvs_cli/src/main.cpp (Mason Hyman 2022-10-13 00:30:13 -0400  46) 
+8ef94ca0c8 spvs_cli/src/main.cpp (Mason Hyman 2022-10-13 00:30:13 -0400  47) //	for (int i = 1; i < open_ports.size(); i++) {
+8ef94ca0c8 spvs_cli/src/main.cpp (Mason Hyman 2022-10-13 00:30:13 -0400  48) //		if (open_ports[i]) {
+8ef94ca0c8 spvs_cli/src/main.cpp (Mason Hyman 2022-10-13 00:30:13 -0400  49) //			host_online = true;
+8ef94ca0c8 spvs_cli/src/main.cpp (Mason Hyman 2022-10-13 00:30:13 -0400  50) //			break;
+8ef94ca0c8 spvs_cli/src/main.cpp (Mason Hyman 2022-10-13 00:30:13 -0400  51) //		}
+8ef94ca0c8 spvs_cli/src/main.cpp (Mason Hyman 2022-10-13 00:30:13 -0400  52) //	}
+8ef94ca0c8 spvs_cli/src/main.cpp (Mason Hyman 2022-10-13 00:30:13 -0400  53) 
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  54) 	if (host_online) {
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  55) 		cout << address << " is ONLINE with open ports: " << endl;
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  56) 		for (int i = 1; i < open_ports.size(); i++) {
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  57) 			if (open_ports.at(i)) 
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  58) 				cout << "   Port " << i << " is open" << endl;
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  59) 		}
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  60) 	} else {
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  61) 		cout << address << " is OFFLINE." << endl;
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  62) 	}
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  63) }
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  64) 
+5626826853 spvs_cli/spvs.cpp     (Mason Hyman 2022-10-12 11:48:44 -0400  65) int main(int argc, char ** argv) {
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  66) 		
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  67) 	list<string> hosts;
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  68) 	list<string>::iterator lit;
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  69) 
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  70) 	/* PARSE USER COMMANDS */
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  71) 	if (argc == 1) { print_usage(); return 1; }	
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  72) 	else if (argc == 2) {
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  73) 		/* If only two arguments, second arg must be a hostname */
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  74) 		hosts.push_back(argv[1]);
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  75) 	}
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  76) 	else if (argc == 3) {
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  77) 		if (string(argv[1]) == "-f") {
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  78) 			/* READ HOSTS FROM FILE */
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  79) 			string host;
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  80) 			ifstream file(argv[2]);
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  81) 			if(!file.is_open()) cerr << "Could not open file " << argv[1] << endl;
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  82) 				
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  83) 			while (file >> host) hosts.push_back(host); 
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  84) 			file.close();
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  85) 			cout << "Successfully read in " << hosts.size() << " hosts" << endl;
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  86) 		}
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  87) 	} 
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  88) 
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  89) 	/* PERFORM BASIC DISCOVERY */
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  90) 	/* Essentially determining if host is online */
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  91) 	for (lit = hosts.begin(); lit != hosts.end(); lit++)
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  92) 		port_scan(*lit, 65535);
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  93) 		
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  94) 
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  95) 
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  96) //	cout << "Port 1947 : ";
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  97) //	if (port_is_open("localhost", 1947)) cout << "OPEN" << endl;
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  98) //	else cout << "CLOSED" << endl;
+39d89d468b spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 16:29:34 -0400  99) 
+5ec07d2b31 spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 13:59:16 -0400 100) 	return 0;
+5ec07d2b31 spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 13:59:16 -0400 101) }
+
+39d89d468b (Mason Hyman 2022-10-12 16:29:34 -0400  1) CC = g++
+39d89d468b (Mason Hyman 2022-10-12 16:29:34 -0400  2) CFLAGS = -std=c++17
+39d89d468b (Mason Hyman 2022-10-12 16:29:34 -0400  3) SRC = src/main.cpp
+39d89d468b (Mason Hyman 2022-10-12 16:29:34 -0400  4) INCLUDES = -I SFML/include
+39d89d468b (Mason Hyman 2022-10-12 16:29:34 -0400  5) LIBS = -L SFML/build/lib -lsfml-network
+39d89d468b (Mason Hyman 2022-10-12 16:29:34 -0400  6) LINKER = -Wl,-rpath,./SFML/build/lib
+39d89d468b (Mason Hyman 2022-10-12 16:29:34 -0400  7) 
+39d89d468b (Mason Hyman 2022-10-12 16:29:34 -0400  8) bin/spvs: $(SRC)
+39d89d468b (Mason Hyman 2022-10-12 16:29:34 -0400  9)   $(CC) $(CFLAGS) $(SRC) -o bin/spvs $(INCLUDES) $(LIBS) $(LINKER)
+39d89d468b (Mason Hyman 2022-10-12 16:29:34 -0400 10) 
+39d89d468b (Mason Hyman 2022-10-12 16:29:34 -0400 11) clean:
+39d89d468b (Mason Hyman 2022-10-12 16:29:34 -0400 12)   rm bin/* 
