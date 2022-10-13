@@ -24,6 +24,4 @@ The only problem that I encountered during sprint 1 was connecting my source fil
 - spvs/spvs_cli/src/simple_scanner.cpp
 
 ## What you accomplished
-In this sprint, I accomplished a substantial foothold to proceed on for the next sprint. Working port scanning funcionality was key for this sprint, which has been finished. In addition, being able to specify individual hosts and host files is a large accomplishment for this sprint.
-
 In sprint 1, I created a simple port scanner that will serve as a strong foundation for future sprints. The features that I added are: scanning for any address and adding port scan functionality for any port.
