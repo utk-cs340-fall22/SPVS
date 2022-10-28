@@ -1,0 +1,82 @@
+app.js
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400  1) /**
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400  2)  * app.js
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400  3)  * Sets up a server currently on local host and handles basic post and get requests.
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400  4) */
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400  5) // jshint esversion: 6
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400  6) 
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400  7) // requiring npm modules
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400  8) const express = require("express");
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400  9) const bodyParser = require("body-parser");
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 10) const fs = require("fs"); 
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 11) 
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 12) const app = express();
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 13) 
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 14) // using modules
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 15) app.use(express.static("public"));
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 16) app.use(bodyParser.urlencoded({extended: true}));
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 17) 
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 18) // displays the landing page
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 19) app.get("/", function(req, res) {
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 20)     res.sendFile(__dirname + "/index.html");
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 21) });
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 22) 
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 23) // process the user input: get the port number and return its status
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 24) app.post("/", function(req, res) {
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 25)     var portNumber = req.body.userInput;
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 26)     console.log(portNumber);
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 27)     fs.writeFile('../spvs_cli/test.txt', portNumber, err => {
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 28)         if (err) {
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 29)           console.error(err);
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 30)         }
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 31)     });
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 32)     res.sendFile(__dirname + "/results.html");
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 33) });
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 34) 
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 35) // server location
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 36) app.listen(5000, function() {
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 37)     console.log("Server is running on port 5000.");
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 38) });
+
+results.html
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400  1) <!DOCTYPE html>
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400  2) <html lang="en">
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400  3)     <head>
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400  4)         <meta charset="UTF-8">
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400  5)         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400  6)         <link rel="stylesheet" href="css/styles.css">
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400  7)         <title>SPVS: Result</title>
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400  8)     </head>
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400  9)     <body>
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 10)         <img src = "images/spvs-high-resolution-logo.png" class = "title"> 
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 11)         <p> Fetching Results...</p>
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 12)     </body>
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 13) </html>
+
+index.html
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400  1) <!-- 
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400  2) Online HTML, CSS and JavaScript editor to run code online.
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400  3) -->
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400  4) <!DOCTYPE html>
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400  5) <html lang="en">
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400  6)   <head>
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400  7)     <meta charset="UTF-8" />
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400  8)     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400  9)     <link rel="stylesheet" href="css/styles.css" />
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 10)     <title>SPVS</title>
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 11)   </head>
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 12) 
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 13)   <body>
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 14)     <img src = "images/spvs-high-resolution-logo.png" class = "title"> 
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 15)     <p> Our easy to use simple port vulnerablity scanner<p>
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 16)     <form action="/" method="POST">
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 17)       <input class="search-box" type="text" name="userInput">
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 18)       <button id="one" class="search-button" type="submit">search</button>
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 19)       <br>
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 20)       <p> OR </p>
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 21)       <br>
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 22)       <button id="two" class="search-button" type="submit">Range Scan</button>
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 23)     </form>
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 24)   </body>
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 25) </html>
+
