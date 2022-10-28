@@ -20,9 +20,9 @@ In the previous sprint, frontend solutions were to be created in React. However,
 Finding a solution to connect node.js and c++ file's was the biggest problem.
 
 ### Issues you worked on
- [#1 https://github.com/masonhyman-school/spvs/issues/23](https://github.com/masonhyman-school/spvs/issues/23) Create a server and connect to frontend
- [#2 https://github.com/masonhyman-school/spvs/issues/24](https://github.com/masonhyman-school/spvs/issues/24) Create a server and connect to frontend
- [#3 https://github.com/masonhyman-school/spvs/issues/25](https://github.com/masonhyman-school/spvs/issues/25) Create a server and connect to frontend
+ [#1 https://github.com/masonhyman-school/spvs/issues/23](https://github.com/masonhyman-school/spvs/issues/23) Create a server and connect to frontend   
+ [#2 https://github.com/masonhyman-school/spvs/issues/24](https://github.com/masonhyman-school/spvs/issues/24) Create a server and connect to frontend   
+ [#3 https://github.com/masonhyman-school/spvs/issues/25](https://github.com/masonhyman-school/spvs/issues/25) Create a server and connect to frontend   
 
 ### Files you worked on
 - spvs/spvs_server/app.js 
