@@ -7,7 +7,7 @@
 ### What you planned to do
 * Connect the frontend design to a local node js server.[#23](https://github.com/masonhyman-school/spvs/issues/23)
 * POST data to backend using ajax[#24](https://github.com/masonhyman-school/spvs/issues/24)
-* run simple scan with passed data and return results
+* run simple scan with passed data and return results[#25](https://github.com/masonhyman-school/spvs/issues/25)
 
 ### What you did not do
 * The big thing I was unable to complete was running the port scanner through the backend. Unfortunately my OS would not run the version of the program as it currently compiles. Over all this issue is minor to the completion of the backend, but it was an unfortunately large time sink for no showable code. We unfortunately may have to host from a linux machine, but that is what it is. 
@@ -16,10 +16,10 @@
 As I previously mentioned, running the scanners across operating systems what quite a pain, and unfinished project. I was also unhappy with the tradtional POST. So I decided to redesign it with ajax and now it is much smoother faster. Of course, ajax is slightly more complicated than traditional POST.
 
 ### Issues you worked on
-[#11](https://github.com/masonhyman-school/spvs/issues/11)
-[#24](https://github.com/masonhyman-school/spvs/issues/24)
-[#23](https://github.com/masonhyman-school/spvs/issues/23)
-[#25](https://github.com/masonhyman-school/spvs/issues/25)
+* [#11](https://github.com/masonhyman-school/spvs/issues/11)
+* [#24](https://github.com/masonhyman-school/spvs/issues/24)
+* [#23](https://github.com/masonhyman-school/spvs/issues/23)
+* [#25](https://github.com/masonhyman-school/spvs/issues/25)
 
 ### Files you worked on
 [spvs/spvs_server/app.js](https://github.com/masonhyman-school/spvs/blob/main/spvs_server/app.js)
