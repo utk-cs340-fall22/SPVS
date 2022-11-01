@@ -13,7 +13,7 @@
 * The big thing I was unable to complete was running the port scanner through the backend. Unfortunately my OS would not run the version of the program as it currently compiles. Over all this issue is minor to the completion of the backend, but it was an unfortunately large time sink for no showable code. We unfortunately may have to host from a linux machine, but that is what it is. 
 
 ### What problems you encountered
-As I previously mentioned, running the scanners across operating systems what quite a pain, and unfinished project. I was also unhappy with the tradtional POST. So I decided to redesign it with ajax and now it is much smoother faster. Of course, ajax is slightly more complicated than traditional POST.
+As I previously mentioned, running the scanners across operating systems was quite a pain, and an unfinished project. I was also unhappy with the tradtional POST. So I decided to redesign it with ajax and now it is much smoother and faster. Of course, ajax is slightly more complicated than traditional POST so I had to figure that out.
 
 ### Issues you worked on
 * [#11](https://github.com/masonhyman-school/spvs/issues/11) NOTE: This one morhped from what was originally needed
