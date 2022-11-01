@@ -23,9 +23,9 @@ As I previously mentioned, running the scanners across operating systems was qui
 
 ### Files you worked on
 * [spvs/spvs_server/app.js](https://github.com/masonhyman-school/spvs/blob/main/spvs_server/app.js)
-* spvs/spvs_server/index.html](https://github.com/masonhyman-school/spvs/blob/main/spvs_server/index.html)
+* [spvs/spvs_server/index.html](https://github.com/masonhyman-school/spvs/blob/main/spvs_server/index.html)
 * [spvs/spvs_server/public/javascript/index.js](https://github.com/masonhyman-school/spvs/blob/main/spvs_server/public/javascript/index.js)
 * [spvs/spvs_server/public/css/styles.css](https://github.com/masonhyman-school/spvs/blob/main/spvs_server/public/css/styles.css)
 
 ### What you accomplished
-Despite the set backs, I was happy with what I got accomplished. Shivam and I worked to get the node js server up and running successfully, I then spent a good amount of time figuring out what protocal would work best to pass data to the server. After choosing POST, then redesigning to ajax I am very happy with the results. We reduced complexity and made the site faster. I also now understand how to run the scanner across different operating systems so I feel prepared now to bury that problem once and for all. Over all we know have a full function site(front and backend). The only missing piece is actually executing the program. Despite the problem we had with it, it's rather elementry to implement.
+Despite the set backs, I was happy with what I got accomplished. Shivam and I worked to get the node js server up and running successfully, I then spent a good amount of time figuring out what protocal would work best to pass data to the server. After choosing POST, then redesigning to ajax I am very happy with the results. We reduced complexity and made the site faster. I also now understand how to run the scanner across different operating systems so I feel prepared now to bury that problem once and for all. We now have a fully functional site(front and backend). The only missing piece is actually executing the program. Despite the problem we had with it, it's rather elementry to implement.
