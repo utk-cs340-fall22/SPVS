@@ -16,7 +16,7 @@
 As I previously mentioned, running the scanners across operating systems what quite a pain, and unfinished project. I was also unhappy with the tradtional POST. So I decided to redesign it with ajax and now it is much smoother faster. Of course, ajax is slightly more complicated than traditional POST.
 
 ### Issues you worked on
-* [#11](https://github.com/masonhyman-school/spvs/issues/11)
+* [#11](https://github.com/masonhyman-school/spvs/issues/11) NOTE: This one morhped from what was originally needed
 * [#24](https://github.com/masonhyman-school/spvs/issues/24)
 * [#23](https://github.com/masonhyman-school/spvs/issues/23)
 * [#25](https://github.com/masonhyman-school/spvs/issues/25)
