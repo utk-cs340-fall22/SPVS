@@ -1,0 +1,61 @@
+app.js
+
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500 11) const cp = require("child_process");
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500 24) app.get('/results.html', function(req, res) {
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500 25)     res.sendFile(__dirname + '/results.html');
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500 26) })
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 27) // process the user input: get the port number and return its status
+c39e5995df (Shivam Mistry 2022-10-27 19:22:06 -0400 28) app.post("/", function(req, res) {
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500 29)     
+6c81477b12 (Shivam Mistry 2022-11-09 12:11:26 -0500 30)     const json = req.body;
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500 31)     
+6c81477b12 (Shivam Mistry 2022-11-09 12:11:26 -0500 32)     const hostName = json.host_name;
+6c81477b12 (Shivam Mistry 2022-11-09 12:11:26 -0500 33)     const portNumber = json.port_number;
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500 34)     var count = Object.keys(json).length;
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500 35)     console.log(count);
+6c81477b12 (Shivam Mistry 2022-11-09 12:11:26 -0500 36) 
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500 37)     if (count == 1) {
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500 38)         const child = cp. execFile('../spvs_cli/bin/spvs', [hostName], {cwd: '../spvs_cli'}, (error, stdout, stderr) => {
+6c81477b12 (Shivam Mistry 2022-11-09 12:11:26 -0500 39)             if (error) {
+6c81477b12 (Shivam Mistry 2022-11-09 12:11:26 -0500 40)                 throw error;
+6c81477b12 (Shivam Mistry 2022-11-09 12:11:26 -0500 41)             }
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500 42)             console.log(stdout);
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500 43)             res.send(stdout);
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500 44)         });
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500 45)     } else {
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500 46)         const child = cp.execFile('../spvs_cli/bin/spvs', ['-p', portNumber, hostName], {cwd: '../spvs_cli'}, (error, stdout, stderr) => {
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500 47)             if (error) {
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500 48)                 throw error;
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500 49)             }
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500 50)             console.log(stdout);
+6c81477b12 (Shivam Mistry 2022-11-09 12:11:26 -0500 51)             res.send(stdout);
+6c81477b12 (Shivam Mistry 2022-11-09 12:11:26 -0500 52)         });
+6c81477b12 (Shivam Mistry 2022-11-09 12:11:26 -0500 53)     }
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500 54)     
+
+index.js
+
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500  21)     var $result = $('#results');
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500  22)     var userInput = {};
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500  24)     userInput['host_name'] = host_name;
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500  37)         userInput['port_number'] = port_number;
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500  45)         data : userInput,
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500  48)             searchBox('search_div');  
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500  49)             //alert(data); 
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500  50)             //var returnedData = JSON.parse(data);
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500  52)             // $('#results').append('<p>' + data + '</p>');
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500  55)             searchBox('search_div');
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500  56)             document.getElementById("results").innerHTML = "no results found";
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500  57)             // alert("nope");
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500  61) 
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500  62)     /*$.ajax({
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500  63)         url : '/',
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500  64)         type: 'GET',
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500  65)         success: function(data) {
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500  66)             document.getElementById("results").innerHTML = data;
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500  67)         },
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500  68)         error: function(request, error) {
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500  69)             alert("something wrong");
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500  70)         }
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500  71)     });*/
+9cda5ac8c4 (Shivam Mistry 2022-11-10 18:37:39 -0500  96)         if(((input.value[i] >= '9' || input.value[i] < '0') && input.value[i] != '-')  || (input.value[i] == '-' && dash_found == true)){
