@@ -13,7 +13,7 @@
 I was trying to run a child process from nodeJS which runs spvs tool, however due to a lot of dependencies of spvs(relative paths) made it difficult to debug.
 
 ### Issues you worked on
- [#1 https://github.com/masonhyman-school/spvs/issues/6](https://github.com/masonhyman-school/spvs/issues/6) Connect backend to spvs tool
+ [#1 https://github.com/masonhyman-school/spvs/issues/6](https://github.com/masonhyman-school/spvs/issues/6) Connect backend to spvs tool   
  [#2 https://github.com/masonhyman-school/spvs/issues/32](https://github.com/masonhyman-school/spvs/issues/32) Make backend and frontend interact with each other
 
 
