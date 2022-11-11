@@ -1,0 +1,441 @@
+5626826853 spvs_cli/spvs.cpp     (Mason Hyman 2022-10-12 11:48:44 -0400   1) #include <iostream>
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400   2) #include <fstream>
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400   3) #include <cstdlib>
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400   4) #include <list>
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400   5) #include <algorithm>
+8ef94ca0c8 spvs_cli/src/main.cpp (Mason Hyman 2022-10-13 00:30:13 -0400   6) #include <thread>
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400   7) #include <mutex>
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400   8) #include <chrono>
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400   9) #include <ctime>
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  10) #include <locale>
+5ec07d2b31 spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 13:59:16 -0400  11) #include <SFML/Network.hpp>
+5626826853 spvs_cli/spvs.cpp     (Mason Hyman 2022-10-12 11:48:44 -0400  12) 
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400  13) #include "spvs.h"
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400  14) 
+5626826853 spvs_cli/spvs.cpp     (Mason Hyman 2022-10-12 11:48:44 -0400  15) using namespace std;
+5626826853 spvs_cli/spvs.cpp     (Mason Hyman 2022-10-12 11:48:44 -0400  16) 
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400  17) std::mutex m;
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400  18) 
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400  19) int main(int argc, char** argv) {
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400  20) /*	Target t;
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400  21) 	if (t.ICMP_Host_Online(argv[1])) cout << "Host is online" << endl;
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400  22) 	else cout << "Something wrong" << endl;
+8ef94ca0c8 spvs_cli/src/main.cpp (Mason Hyman 2022-10-13 00:30:13 -0400  23) 
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400  24) 	vector<int> ports;
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400  25) 	for (int i = 1; i < 65000; i++) {
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400  26) 		ports.push_back(i);
+8ef94ca0c8 spvs_cli/src/main.cpp (Mason Hyman 2022-10-13 00:30:13 -0400  27) 	}
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400  28) 	t.TCP_Scan_Ports(argv[1], ports);
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400  29) 	
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400  30) 	t.TCP_Print_Open_Ports();
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400  31) 
+33d06556af spvs_cli/src/main.cpp (ankitm28    2022-10-27 16:51:45 -0400  32) 	if (argc == 1) {
+33d06556af spvs_cli/src/main.cpp (ankitm28    2022-10-27 16:51:45 -0400  33) 		Print_Usage();
+33d06556af spvs_cli/src/main.cpp (ankitm28    2022-10-27 16:51:45 -0400  34) 		exit(1);
+33d06556af spvs_cli/src/main.cpp (ankitm28    2022-10-27 16:51:45 -0400  35) 	}
+33d06556af spvs_cli/src/main.cpp (ankitm28    2022-10-27 16:51:45 -0400  36) 
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400  37) 	Input input(argc, argv);
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400  38) 	if (input.Arg_Exists("-f")) cout << "Found" << endl;
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400  39) 
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400  40) 	cout << input.Get_Next_Arg("-f") << endl;
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  41) */
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  42) 	SPVS(argc, argv);
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400  43) 	return 0;
+39d89d468b spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 16:29:34 -0400  44) }
+39d89d468b spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 16:29:34 -0400  45) 
+8ef94ca0c8 spvs_cli/src/main.cpp (Mason Hyman 2022-10-13 00:30:13 -0400  46) 
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400  47) 
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400  48) 
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400  49) /* DEFINITIONS FOR spvs.h */
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400  50) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  51) /* SPVS CLASS */
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  52) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  53) /*
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  54)  * @name SPVS
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  55)  * @brief Constructor for SPVS class. Serves as driver for program.
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  56)  * @param[in] argc - number of args on stdin
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  57)  * @param[in] argv - array of args from stdin
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  58)  * @return SPVS class
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  59)  */
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  60) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  61) SPVS::SPVS(int &argc, char ** argv) {
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  62) 	vector <Target *> tmp;
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  63) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  64) 	if (argc == 1) Print_Usage();
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  65) 	
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  66) 	/* Begin timing information */
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  67) 	auto start = chrono::system_clock::to_time_t(chrono::system_clock::now());
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  68) 	cout << "Starting SPVS at " << ctime(&start); 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  69) 	
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  70) 	this->input = new Input(argc, argv);
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  71) 	
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  72) 	/* Check to see if -f has been specified, if so handle the file and load targets */
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  73) 	if (this->input->Arg_Exists("-f")) {
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  74) 		this->targets = this->input->Get_Targets_From_File(this->input->Get_Next_Arg("-f"));
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  75) 	}
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  76) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  77) 	/* Check to see if -p has been specified, if so load port / port range */
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  78) 	if (this->input->Arg_Exists("-p")) {
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  79) 		this->ports_to_scan = this->input->Get_Ports_To_Scan(this->input->Get_Next_Arg("-p"));		
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  80) 	} else {
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  81) 		/* No ports specified, populate default */
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  82) 		/* TODO */
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  83) 	}
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  84) 	
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  85) 	/* Treat all words on stdin without '-' or '--' as targets */
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  86) 	tmp = this->input->Get_Targets_From_Stdin();
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  87) 	targets.insert(targets.end(), tmp.begin(), tmp.end());
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  88) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  89) 	/* Once targets have been gathered, identify modifers to default SPVS */
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  90) 		
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  91) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  92) 	/* End timing and print results */
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  93) 	auto end = chrono::system_clock::to_time_t(chrono::system_clock::now());
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  94) //	Print_Targets();
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  95) //	Print_Ports();
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400  96) }
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400  97) 
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400  98) /*
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400  99)  *	@name Print_Usage
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 100)  *	@brief Prints spvs usage.
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 101)  */
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 102) void SPVS::Print_Usage() {	
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 103) 	cerr <<  "Usage: spvs [Options] {target specification}" << endl
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 104) 		 << "TARGET SPECIFICATION:" << endl
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 105) 		 << "    -f <input file name>: Input from list of hosts." << endl;
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 106) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 107) 	exit(1);
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 108) }
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 109) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 110) void SPVS::Print_Targets() {
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 111) 	for (int i = 0; i < targets.size(); i++) {
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 112) 		cout << targets[i]->Get_Address() << endl;
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 113) 	}
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 114) }
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 115) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 116) void SPVS::Print_Ports() {
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 117) 	for (int i = 0; i < ports_to_scan.size(); i++) {
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 118) 		cout << ports_to_scan[i] << " ";
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 119) 	}
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 120) 	cout << endl;
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 121) }
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 122) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 123) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 124) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 125) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 126) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 127) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 128) 
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 129) /* INPUT CLASS */
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 130) 
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 131) /*
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 132)  *	@name Input
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 133)  *  @brief Constructor for the Input class, adds argv to args vector in class instance.
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 134)  *  @param[in] argc - number of arguments
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 135)  *  @param[in] argv - array of command line arguments.
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 136)  *  @return Input class instance.
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 137)  */
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 138) Input::Input(int &argc, char ** argv) {
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 139) 	for (int i = 1; i < argc; i++) {
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 140) 		this->args.push_back(string(argv[i]));
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 141) 	}
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 142) }
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 143) 
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 144) /*
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 145)  *	@name Arg_Exists
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 146)  *	@brief Checks if supplied argument exists in user's input
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 147)  *	@param[in] option - supplied argument to find
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 148)  *  @return true if arg was found
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 149)  */
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 150) 
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 151) bool Input::Arg_Exists(const string& option) const {
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 152) 	return find(args.begin(), args.end(), option) != args.end();
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 153) }
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 154) 
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 155) /*
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 156)  *	@name Get_Next_Arg
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 157)  *	@brief return argument following supplied option
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 158)  *	@param[in] option
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 159)  *  @return the desired argument, empty string if none exists
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 160)  */
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 161) 
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 162) const string& Input::Get_Next_Arg(const string& option) const {
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 163) 	list<string>::const_iterator lit;
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 164) 
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 165) 	/* Find the supplied argument and then return the following argument */
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 166) 	lit = find(args.begin(), args.end(), option);
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 167) 	
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 168) 	if (lit != args.end() && ++lit != args.end()) {
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 169) 		return *lit;
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 170) 	} 
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 171) 
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 172) 	static const string empty = "";	
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 173) 	return empty;
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 174) }
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 175) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 176) /* 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 177)  *	@name Get_Targets_From_File
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 178)  *	@brief Collects all words from file and initializes Target instance for each.
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 179)  *	@param[in] filename - target filename
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 180)  *  @return vector<Target *> - list of targets to be assigned to SPVS class.
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 181)  */
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 182) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 183) vector<Target *> Input::Get_Targets_From_File(const string& filename) {
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 184) 	vector<Target *> ret;
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 185) 	string s;
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 186) 	ifstream file;
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 187) 	Target * t;
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 188) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 189) 	file.open(filename);
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 190) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 191) 	if (!file.is_open()) {
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 192) 		cerr << endl << "ERROR: Could not open file: " << filename << endl;
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 193) 		exit(1);
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 194) 	}
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 195) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 196) 	while(file >> s) {
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 197) 		t = new Target(s);
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 198) 		ret.push_back(t);
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 199) 	}	
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 200) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 201) 	/* Cleanup and remove -f and filename from args */
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 202) 	file.close();	
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 203) 	
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 204) 	args.erase(find(args.begin(), args.end(), "-f"));	
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 205) 	args.erase(find(args.begin(), args.end(), filename));	
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 206) 	return ret;	
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 207) }
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 208) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 209) /* 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 210)  *	@name Get_Targets_From_Stdin
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 211)  *	@brief Collects all non '-' or '--' args and creats targets for them.
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 212)  *	@return a vector of targets to be assigned to SPVS class.
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 213)  *
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 214)  */
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 215) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 216) vector<Target *> Input::Get_Targets_From_Stdin() {
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 217) 	list<string>::const_iterator lit;
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 218) 	vector<Target *> ret;
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 219) 	Target * t;
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 220) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 221) 	for (lit = args.begin(); lit !=  args.end(); lit++) {
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 222) 		if (lit->at(0) != '-') {
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 223) 			string name = *lit;
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 224) 			t = new Target(name);
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 225) 			ret.push_back(t);
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 226) 		} 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 227) 	}
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 228) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 229) 	return ret;
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 230) }
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 231) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 232) vector<int> Input::Get_Ports_To_Scan(const string& input) {
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 233) 	vector<int> ret;
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 234) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 235) 	/* Check to see if range was specified */
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 236) 	int pos = input.find('-');
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 237) 	if (pos != string::npos) {
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 238) 		/* Split the string */
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 239) 		string l;
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 240) 		for (int i = 0; i < pos; i++) l += input[i];
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 241) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 242) 		string r;
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 243) 		for (int i = pos + 1; i < input.size(); i++) r += input[i];
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 244) 		
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 245) 		if (!all_of(l.begin(), l.end(), ::isdigit) || !all_of(r.begin(), r.end(), ::isdigit)) {
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 246) 			cerr << endl << "ERROR: Invalid port specified, must be a number" << endl;
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 247) 			exit(1);
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 248) 		}
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 249) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 250) 		int starting_port = stoi(l);
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 251) 		int ending_port = stoi(r);
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 252) 		
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 253) 		if (starting_port >= ending_port) {
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 254) 			cerr << endl << "ERROR: Starting port must not be greater than ending port" << endl;
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 255) 			exit(1);
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 256) 		} else if (ending_port > 65535 || starting_port < 1) {
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 257) 			cerr << endl << "ERROR: Port specification out of bounds. Port range must be between 1 - 65535" << endl;
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 258) 			exit(1);
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 259) 		}
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 260) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 261) 		for (int i = starting_port; i <= ending_port; i++) {
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 262) 			ret.push_back(i);
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 263) 		}
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 264) 	} else {
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 265) 		/* Only one port specified */
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 266) 		if (!all_of(input.begin(), input.end(), ::isdigit)) {
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 267) 			cerr << endl << "ERROR: Invalid port specified, must be a number" << endl;
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 268) 			exit(1);
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 269) 		}
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 270) 		
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 271) 		int port = stoi(input);
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 272) 	
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 273) 		if (port < 1 || port > 65535) {
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 274) 			cerr << endl << "ERROR: Port specification out of bounds. Port range must be between 1 - 65535" << endl;
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 275) 			exit(1);
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 276) 		}
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 277) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 278) 		ret.push_back(port);
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 279) 	}
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 280) 		
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 281) 	/* Cleanup and remove -p and port specification from args */
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 282) 	args.erase(find(args.begin(), args.end(), "-p"));	
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 283) 	args.erase(find(args.begin(), args.end(), input));	
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 284) 	return ret;
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 285) }
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 286) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 287) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 288) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 289) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 290) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 291) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 292) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 293) 
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 294) /* TARGET CLASS */
+6e5711f355 spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 12:25:24 -0400 295) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 296) /*
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 297)  *	@name Target
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 298)  *	@brief Constructs a Target instance, assignes its address.
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 299)  */
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 300) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 301) Target::Target(string& address) {
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 302) 	this->address = address;
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 303) }
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 304) 
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 305) /*
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 306)  *	@name Host_Online
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 307)  *	@brief returns true if host is online using UNIX ping
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 308)  *	@param[in] address - address of target as string
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 309)  * 	@return true if host is online false if isn't
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 310)  */
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 311) 
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 312) bool Target::ICMP_Host_Online(const string& address) {
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 313) 	string command = "ping -c1 -s1 ";
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 314) 	command.append(address);
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 315) 	command.append(" &> /dev/null");
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 316) 	if (!system(command.c_str())) return true;
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400 317) 	
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 318) 	return false;
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 319) }
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 320) 
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 321) /*
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 322)  *	@name TCP_Port_Is_Open
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 323)  *	@brief Checks if single port is open on target, adds to open_ports if open.
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 324)  *	@param[in] address - address of target 
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 325)  *	@param[in] port - target port
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 326)  *	@return void
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 327)  */
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 328) 
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 329) void Target::TCP_Port_Is_Open(const string& address, const int port) {
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 330) 	m.lock();
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400 331) 
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 332) 	if (sf::TcpSocket().connect(sf::IpAddress::resolve(address).value(), port, sf::milliseconds(100)) == sf::Socket::Status::Done) {
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 333) 		/* If port is open add port to open_ports */
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 334) 		open_ports.push_back(port);
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400 335) 	}
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400 336) 
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 337) 	m.unlock();
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 338) }
+25a3d842df spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 22:28:20 -0400 339) 
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 340) /*
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 341)  *	@name TCP_Scan_Ports
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 342)  *	@brief Scans given ports quickly using multithreading
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 343)  *	@param[in] address - address of target
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 344)  *	@param[in] ports - list of ports to be scanned.
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 345)  */
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 346) 
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 347) void Target::TCP_Scan_Ports(const string& address, const vector<int>& ports) {
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 348) 	vector <thread *> scanning_tasks;
+0cde2a55db spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 11:36:12 -0400 349) 
+0cde2a55db spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 11:36:12 -0400 350) 		/* For all ports in ports vector, scan that port */	
+0cde2a55db spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 11:36:12 -0400 351) 		for (int i = 0; i < ports.size(); i++) {
+0cde2a55db spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 11:36:12 -0400 352) 			/* Push port scan to thread */
+0cde2a55db spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 11:36:12 -0400 353) 			scanning_tasks.push_back(new thread(&Target::TCP_Port_Is_Open, this, address, ports[i]));
+0cde2a55db spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 11:36:12 -0400 354) 			
+0cde2a55db spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 11:36:12 -0400 355) 			/* Only create 50 threads at a time as to avoid maxing out threads */
+0cde2a55db spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 11:36:12 -0400 356) 			if (i % 50 == 0 && i != 0) {
+0cde2a55db spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 11:36:12 -0400 357) 				
+0cde2a55db spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 11:36:12 -0400 358) 				for (int j = 0; j < scanning_tasks.size(); j++) {
+0cde2a55db spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 11:36:12 -0400 359) 					scanning_tasks[j]->join();
+0cde2a55db spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 11:36:12 -0400 360) 					delete scanning_tasks[j];
+0cde2a55db spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 11:36:12 -0400 361) 				}
+0cde2a55db spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 11:36:12 -0400 362) 				
+0cde2a55db spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 11:36:12 -0400 363) 				scanning_tasks.clear();
+0cde2a55db spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 11:36:12 -0400 364) 			}
+0cde2a55db spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 11:36:12 -0400 365) 		}
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 366) }
+39d89d468b spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 16:29:34 -0400 367) 
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 368) /*
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 369)  *	@name TCP_Print_Open_Ports
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 370)  *	@brief Sorts the open_ports vector and prints to user.
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 371)  */
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 372) 
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 373) void Target::TCP_Print_Open_Ports() {
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 374) 	sort(open_ports.begin(), open_ports.end());
+ce27d080b9 spvs_cli/src/main.cpp (Mason Hyman 2022-10-26 23:05:56 -0400 375) 	for (int i = 0; i < open_ports.size(); i++) cout << open_ports[i] << endl;
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 376) }
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 377) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 378) /*
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 379)  *	@name Get_Address 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 380)  *	@brief Accessor function for targets address.
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 381)  *  @return Const reference to targets address.
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 382)  */
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 383) 
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 384) const string& Target::Get_Address() {
+584176a32a spvs_cli/src/main.cpp (Mason Hyman 2022-10-27 22:52:23 -0400 385) 	return address;
+5ec07d2b31 spvs_cli/src/main.cpp (Mason Hyman 2022-10-12 13:59:16 -0400 386) }
+
+
+ce27d080b9 (Mason Hyman 2022-10-26 23:05:56 -0400  1) #ifndef SPVS_HEADER_FILE_H
+ce27d080b9 (Mason Hyman 2022-10-26 23:05:56 -0400  2) #define SPVS_HEADER_FILE_H
+ce27d080b9 (Mason Hyman 2022-10-26 23:05:56 -0400  3) 
+584176a32a (Mason Hyman 2022-10-27 22:52:23 -0400  4) /* Defines information for single target. */
+584176a32a (Mason Hyman 2022-10-27 22:52:23 -0400  5) class Target
+584176a32a (Mason Hyman 2022-10-27 22:52:23 -0400  6) {
+584176a32a (Mason Hyman 2022-10-27 22:52:23 -0400  7)   public:
+584176a32a (Mason Hyman 2022-10-27 22:52:23 -0400  8)           Target (std::string&);
+6e5711f355 (Mason Hyman 2022-10-27 12:25:24 -0400  9) 
+584176a32a (Mason Hyman 2022-10-27 22:52:23 -0400 10)           bool ICMP_Host_Online(const std::string&);
+584176a32a (Mason Hyman 2022-10-27 22:52:23 -0400 11)           void TCP_Port_Is_Open(const std::string&, const int);
+584176a32a (Mason Hyman 2022-10-27 22:52:23 -0400 12)           void TCP_Scan_Ports(const std::string&, const std::vector<int>&);               
+584176a32a (Mason Hyman 2022-10-27 22:52:23 -0400 13)   
+584176a32a (Mason Hyman 2022-10-27 22:52:23 -0400 14)   /* Accessor / Information Functions */
+584176a32a (Mason Hyman 2022-10-27 22:52:23 -0400 15)           void TCP_Print_Open_Ports();
+584176a32a (Mason Hyman 2022-10-27 22:52:23 -0400 16)           const std::string& Get_Address();
+584176a32a (Mason Hyman 2022-10-27 22:52:23 -0400 17)   private:
+584176a32a (Mason Hyman 2022-10-27 22:52:23 -0400 18)           std::string address;
+584176a32a (Mason Hyman 2022-10-27 22:52:23 -0400 19)           std::vector<int> open_ports; 
+584176a32a (Mason Hyman 2022-10-27 22:52:23 -0400 20) };
+6e5711f355 (Mason Hyman 2022-10-27 12:25:24 -0400 21) 
+6e5711f355 (Mason Hyman 2022-10-27 12:25:24 -0400 22) /* Input Parser */
+6e5711f355 (Mason Hyman 2022-10-27 12:25:24 -0400 23) class Input
+6e5711f355 (Mason Hyman 2022-10-27 12:25:24 -0400 24) {
+6e5711f355 (Mason Hyman 2022-10-27 12:25:24 -0400 25)   public:
+6e5711f355 (Mason Hyman 2022-10-27 12:25:24 -0400 26)           Input (int &argc, char ** argv);
+6e5711f355 (Mason Hyman 2022-10-27 12:25:24 -0400 27) 
+6e5711f355 (Mason Hyman 2022-10-27 12:25:24 -0400 28)           bool Arg_Exists(const std::string &option) const;
+6e5711f355 (Mason Hyman 2022-10-27 12:25:24 -0400 29)           const std::string& Get_Next_Arg(const std::string & option) const;
+584176a32a (Mason Hyman 2022-10-27 22:52:23 -0400 30) 
+584176a32a (Mason Hyman 2022-10-27 22:52:23 -0400 31)           std::vector<Target *> Get_Targets_From_File(const std::string&);
+584176a32a (Mason Hyman 2022-10-27 22:52:23 -0400 32)           std::vector<Target *> Get_Targets_From_Stdin();
+584176a32a (Mason Hyman 2022-10-27 22:52:23 -0400 33)           std::vector<int> Get_Ports_To_Scan(const std::string&);
+6e5711f355 (Mason Hyman 2022-10-27 12:25:24 -0400 34)   private:
+584176a32a (Mason Hyman 2022-10-27 22:52:23 -0400 35)           std::list<std::string> args;
+6e5711f355 (Mason Hyman 2022-10-27 12:25:24 -0400 36) };
+6e5711f355 (Mason Hyman 2022-10-27 12:25:24 -0400 37) 
+584176a32a (Mason Hyman 2022-10-27 22:52:23 -0400 38) /* Overarching SPVS Class. Drives program */
+584176a32a (Mason Hyman 2022-10-27 22:52:23 -0400 39) class SPVS
+ce27d080b9 (Mason Hyman 2022-10-26 23:05:56 -0400 40) {
+ce27d080b9 (Mason Hyman 2022-10-26 23:05:56 -0400 41)   public:
+584176a32a (Mason Hyman 2022-10-27 22:52:23 -0400 42)           SPVS (int &argc, char ** argv);
+584176a32a (Mason Hyman 2022-10-27 22:52:23 -0400 43) 
+584176a32a (Mason Hyman 2022-10-27 22:52:23 -0400 44)           void Print_Usage();
+584176a32a (Mason Hyman 2022-10-27 22:52:23 -0400 45)           void Print_Targets();
+584176a32a (Mason Hyman 2022-10-27 22:52:23 -0400 46)           void Print_Ports();
+ce27d080b9 (Mason Hyman 2022-10-26 23:05:56 -0400 47)   private:
+584176a32a (Mason Hyman 2022-10-27 22:52:23 -0400 48)           Input * input;
+584176a32a (Mason Hyman 2022-10-27 22:52:23 -0400 49)           std::vector<Target *> targets;
+584176a32a (Mason Hyman 2022-10-27 22:52:23 -0400 50)           std::vector<int> ports_to_scan;
+ce27d080b9 (Mason Hyman 2022-10-26 23:05:56 -0400 51) };
+ce27d080b9 (Mason Hyman 2022-10-26 23:05:56 -0400 52) 
+ce27d080b9 (Mason Hyman 2022-10-26 23:05:56 -0400 53) #endif 
