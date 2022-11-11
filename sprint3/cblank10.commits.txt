@@ -1,0 +1,95 @@
+1d5a607535 (codyb42       2022-11-09 17:52:50 -0500 22)           <span style = "color: red; text-align: center; font-size: small;" id = searchError></span>
+1d5a607535 (codyb42       2022-11-09 17:52:50 -0500 31) 	width: 320px;
+1d5a607535 (codyb42       2022-11-09 17:52:50 -0500 31) 	width: 320px;
+5df1773573 (codyb42       2022-11-01 15:45:13 -0400 20)           <input id = "search" class="search-box" type="text" name="hostName" placeholder="Enter a hostname">
+5df1773573 (codyb42       2022-11-01 15:45:13 -0400 21)           <button id="one" class="search-button" onclick="send()">scan</button>
+5df1773573 (codyb42       2022-11-01 15:45:13 -0400 24)           <div class = "filters">
+5df1773573 (codyb42       2022-11-01 15:45:13 -0400 25)             <!---------------------------------------------------------------------------------->
+5df1773573 (codyb42       2022-11-01 15:45:13 -0400 26)             <input type="checkbox" id="needs_port_scan" name="needs_port_scan" value="1" onclick = "unlock_filter('needs_port_scan', 'portScan')">
+5df1773573 (codyb42       2022-11-01 15:45:13 -0400 27)             <label for="needs_port_scan">Port Scan</label>
+5df1773573 (codyb42       2022-11-01 15:45:13 -0400 28)             <input id = "portScan" name = "portScan" type = "text" style = "margin-left: 10px;" placeholder = "1234 or 1234-4567" disabled><br>
+5df1773573 (codyb42       2022-11-01 15:45:13 -0400 29)             <span style = "color: red; text-align: center; font-size: small;" id = portError></span>
+5df1773573 (codyb42       2022-11-01 15:45:13 -0400 30)             <!--TODO: copy and paste the above 3 lines and change name id to create all filters-->
+5df1773573 (codyb42       2022-11-01 15:45:13 -0400 31)           </div>
+5df1773573 (codyb42       2022-11-01 15:45:13 -0400 32)           <p style = "text-align: center;"> OR </p>
+5df1773573 (codyb42       2022-11-01 15:45:13 -0400 33)           <div style = "text-align: center;">
+5df1773573 (codyb42       2022-11-01 15:45:13 -0400 34)             <input type="file" name="file" id="file"/>
+5df1773573 (codyb42       2022-11-01 15:45:13 -0400 35)             <button id="two" class="search-button" type="submit" onclick ="send()">File Upload</button>
+5df1773573 (codyb42       2022-11-01 15:45:13 -0400 36)           </div>
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 20)     var host_name = document.getElementById('search').value;
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 30)     if(document.getElementById('needs_port_scan').checked) {
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 31)         if(!error_check_port()) return false;
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 32)         var port_number = document.getElementById('portScan').value;
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 33)     }
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 34)     //TODO: copy the above line and replace the IDs with their respective checkbox and text input IDs
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 40)             'host_name' : host_name,
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 41)             'port_number': port_number
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 42)             //TODO: add to the json for new flags here!
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 48)             document.getElementById("results").innerHTML = data;
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 50)         error : function(request,error){
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 55)  }
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 56) 
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 57)  function unlock_filter(check_ID, input_ID){
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 58)   if (document.getElementById(check_ID).checked) {
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 59)       document.getElementById(input_ID).disabled = false;
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 60)   } else {
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 61)         document.getElementById(input_ID).value = "";
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 62)         document.getElementById(input_ID).disabled = true;
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 63)   }
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 64) }
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 65) 
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 66) function error_check_port(){
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 67)     var input = document.getElementById("portScan");
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 68)     var dash_found = false;
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 72)         input.focus();
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 73)         document.getElementById("portScan").className = document.getElementById("portScan").className + " error"; 
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 74)         document.getElementById("portError").innerHTML = "Invalid format must match: 1234 or 1234-4567 <br>";
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 75)         return false;
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 76)     }
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 77)     for(var i = 1; i < input.value.length; i++){
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 78)         // if the char is not a number && the char is not a '-' || the char is a '-' && a '-' has been seen before
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 79)         if(((input.value[i] >= '9' || input.value[i] <= '0') && input.value[i] != '-')  || (input.value[i] == '-' && dash_found == true)){
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 80)             
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 81)             //if(dash_found == true) console.log("why?");
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 82)             input.setSelectionRange(i, i+1);
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 83)             input.focus();
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 84)             document.getElementById("portScan").className = document.getElementById("portScan").className + " error"; 
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 85)             document.getElementById("portError").innerHTML = "Invalid format must match: 1234 or 1234-4567 <br>";
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 86)             return false;
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 87)         }
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 88)         if(input.value[i] == '-') dash_found = true;
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 89)     }
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 92)     return true;
+5df1773573 (codyb42 2022-11-01 15:45:13 -0400 93) }
+5df1773573 (codyb42       2022-11-01 15:45:13 -0400 30) #search_div{
+5df1773573 (codyb42       2022-11-01 15:45:13 -0400 32)  	margin: auto;
+5df1773573 (codyb42       2022-11-01 15:45:13 -0400 33) 	border: 1px solid #4CAF50;
+5df1773573 (codyb42       2022-11-01 15:45:13 -0400 34) 	text-align: left;
+5df1773573 (codyb42       2022-11-01 15:45:13 -0400 35) }
+5df1773573 (codyb42       2022-11-01 15:45:13 -0400 36) .filters{
+5df1773573 (codyb42       2022-11-01 15:45:13 -0400 37) 	padding-top: 10px;
+5df1773573 (codyb42       2022-11-01 15:45:13 -0400 38) }
+5df1773573 (codyb42       2022-11-01 15:45:13 -0400 39) .error {
+5df1773573 (codyb42       2022-11-01 15:45:13 -0400 40) 	border:2px solid red;
+5df1773573 (codyb42       2022-11-01 15:45:13 -0400 41)   }
+4765c7546a (codyb42 2022-11-09 22:26:35 -0500  1) <!DOCTYPE html>
+4765c7546a (codyb42 2022-11-09 22:26:35 -0500  2) <html lang="en">
+4765c7546a (codyb42 2022-11-09 22:26:35 -0500  3)   <head>
+4765c7546a (codyb42 2022-11-09 22:26:35 -0500  4)     <meta charset="UTF-8" />
+4765c7546a (codyb42 2022-11-09 22:26:35 -0500  5)     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+4765c7546a (codyb42 2022-11-09 22:26:35 -0500  6)     <link rel="stylesheet" href="css/styles.css" />
+4765c7546a (codyb42 2022-11-09 22:26:35 -0500  7)     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+4765c7546a (codyb42 2022-11-09 22:26:35 -0500  8)     <script src = "javascript/index.js"></script>
+4765c7546a (codyb42 2022-11-09 22:26:35 -0500  9)     <title>SPVS</title>
+4765c7546a (codyb42 2022-11-09 22:26:35 -0500 10)   </head>
+4765c7546a (codyb42 2022-11-09 22:26:35 -0500 11)   <body>
+4765c7546a (codyb42 2022-11-09 22:26:35 -0500 12)       <div>
+4765c7546a (codyb42 2022-11-09 22:26:35 -0500 13)           <p> <strong><u>Results:</u></strong></p><br>
+4765c7546a (codyb42 2022-11-09 22:26:35 -0500 14)           <p>&lthostname&gt</p><br>
+4765c7546a (codyb42 2022-11-09 22:26:35 -0500 15)           <p><strong>PORT      STATUS     SERVICE</strong></p>
+4765c7546a (codyb42 2022-11-09 22:26:35 -0500 16)           <p>asdfsdaf  asdfdasf   aasdf</p>
+4765c7546a (codyb42 2022-11-09 22:26:35 -0500 17)           <p>gfhj      fdgsdfg    asdfasdf</p>
+4765c7546a (codyb42 2022-11-09 22:26:35 -0500 18)       </div>
+4765c7546a (codyb42 2022-11-09 22:26:35 -0500 19)   </body>
+4765c7546a (codyb42 2022-11-09 22:26:35 -0500 20) </html>
+4765c7546a (codyb42 2022-11-09 22:26:35 -0500 21) <!--NOTE: I am formatting the output for the json results cannot finish parsing until json finished-->
