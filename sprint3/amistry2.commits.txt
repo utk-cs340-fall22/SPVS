@@ -1,0 +1,63 @@
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500  74) int main(int argc, char **argv)
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500  75) {
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500  76)     SPVS(argc, argv);
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500  77)     return 0;
+8cb4f10668 (ankitm28 2022-10-27 20:09:39 -0400  78) }
+8cb4f10668 (ankitm28 2022-10-27 20:09:39 -0400  79) 
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500  80) /* Code taken from main.cpp */
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500  81) SPVS::SPVS(int &argc, char **argv) 
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500  82) {
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500  83)     vector <Target *> trgts;
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500  84) 
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500  85)     if (argc == 1) {
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500  86)         cerr << "Usage: spvs [options] {target specification}" << endl
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500  87)              << "TARGET SPECIFICATION:" << endl
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500  88)              << "    -f <input file name>: Input from list of hosts." << endl
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500  89)              << "    -p <port range>: Single port or port range specified start-end." << endl
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500  90)              << "        Ex: spvs -p 10     Scans only port 10." << endl
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500  91)              << "        Ex: spvs -p 10-100 Scans only 10 through 100." << endl;
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500  92)     }
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500  93) 
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500  94)     auto start_time = chrono::system_clock::to_time_t(chrono::system_clock::now());
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500  95)     cout << "Starting SPVS at " << ctime(&start_time);
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500  96) 
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500  97)     this->input = new Input(argc, argv);
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500  98)     
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500  99)     if (this->input->Arg_Exists("-f")) {
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500 100)         this->targets = this->input->Get_Targets_From_File(this->input->Get_Next_Arg("-f"));
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500 101)     }
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500 102) 
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500 103)     if (this->input->Arg_Exists("-p")) {
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500 104)         this->ports_to_scan = this->input->Get_Ports_To_Scan(this->input->Get_Next_Arg("-p"));
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500 105)         this->services = new Services("references/services");
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500 106)     } else {
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500 107)         this->services = new Services("references/top_ports");
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500 108)     }
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500 109) 
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500 110)     trgts = this->input->Get_Targets_From_Stdin();
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500 111)     targets.insert(targets.end(), trgts.begin(), trgts.end());
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500 112) 
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500 113)     Scan_Targets();
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500 114)     Print_Targets();
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500 115) 
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500 116)     auto end_time = chrono::system_clock::to_time_t(chrono::system_clock::now());
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500 117)     cout << "Successfully completed: " << targets.size() << " hosts scanned " << difftime(end_time, start_time) << " seconds." << endl;
+8cb4f10668 (ankitm28 2022-10-27 20:09:39 -0400 118) }
+8cb4f10668 (ankitm28 2022-10-27 20:09:39 -0400 119) 
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500 120) void SPVS::Scan_Targets() 
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500 121) {
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500 122)     vector <Target *>::const_iterator targetit;
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500 123)     Target *tmpt;
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500 124) 
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500 125)     for (targetit = targets.begin(); targetit != targets.end(); targetit++) {
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500 126)         tmpt = *targetit;
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500 127) 
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500 128)         if (!tmpt->ICMP_Host_Online(tmpt->Get_Address())) {
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500 129)             tmpt->Set_Online(false);
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500 130)             break;
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500 131)         }
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500 132) 
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500 133)         tmpt->Set_Online(true);
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500 134)         tmpt->TCP_Scan_Ports(tmpt->Get_Address(), ports_to_scan);
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500 135)     }
+d63dc9145f (ankitm28 2022-11-10 19:54:41 -0500 136) }
