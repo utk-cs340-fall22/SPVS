@@ -1,0 +1,140 @@
+efd8107853 spvs_cli/src/main.cpp (Mason Hyman 2022-11-09 10:43:14 -0500 506) 		cout << "	No ports found open for host." << endl << endl;
+efd8107853 spvs_cli/src/main.cpp (Mason Hyman 2022-11-09 10:43:14 -0500 510) 	cout << setw(15) << left << "PORT" << setw(15) << "STATUS" << setw(15) << "SERVICE" << endl; 
+efd8107853 spvs_cli/src/main.cpp (Mason Hyman 2022-11-09 10:43:14 -0500 512) 		cout << setw(15) << left << open_ports.at(i) << setw(15) << "Open" << setw(15) << services->Get_Port_Name(open_ports.at(i)) << endl;
+efd8107853 spvs_cli/src/main.cpp (Mason Hyman 2022-11-09 10:43:14 -0500 514) 
+efd8107853 spvs_cli/src/main.cpp (Mason Hyman 2022-11-09 10:43:14 -0500 515) 	cout << endl;
+
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500   1) #include <stdio.h>
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500   2) #include <stdlib.h>
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500   3) #include <unistd.h>
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500   4) #include <errno.h>
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500   5) #include <string.h>
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500   6) #include <sys/socket.h>
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500   7) #include <netinet/tcp.h>
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500   8) #include <netinet/ip.h>
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500   9) #include <arpa/inet.h>
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  10) 
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  11) /* 12 byte header to calculate tcp header checksum */
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  12) struct pseudo_header {
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  13) 	uint32_t source_addr;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  14) 	uint32_t dest_addr;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  15) 	uint8_t placeholder;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  16) 	uint8_t protocol;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  17) 	uint16_t tcp_length;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  18) };
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  19) 
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  20) unsigned short Checksum (unsigned short * ptr, int num_bytes) {
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  21) 	register long sum;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  22) 	unsigned short oddbyte;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  23) 	register short answer;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  24) 
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  25) 	sum = 0;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  26) 	while (num_bytes > 1) {
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  27) 		sum += *ptr++;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  28) 		num_bytes -= 2;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  29) 	}
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  30) 
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  31) 	if (num_bytes == 1) {
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  32) 		oddbyte = 0;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  33) 		*((u_char*)&oddbyte) = *(u_char*)ptr;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  34) 		sum += oddbyte;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  35) 	}
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  36) 
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  37) 	sum = (sum >> 16) + (sum & 0xffff);
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  38) 	sum = sum + (sum >> 16);
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  39) 	answer = (short)~sum;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  40) 
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  41) 	return(answer);
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  42) }
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  43) 
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  44) /* Creates raw socket, needs to be chaged to usable function */
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  45) int main() {
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  46) 	int s = socket (PF_INET, SOCK_RAW, IPPROTO_TCP);
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  47) 	
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  48) 	if (s < 0) {
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  49) 		perror("socket");
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  50) 		exit(1);
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  51) 	}
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  52) 
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  53) 	char datagram[4096];
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  54) 	char source_ip[32];
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  55) 	char * data;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  56) 	char * pseudogram;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  57) 
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  58) 	memset(datagram, 0, 4096);
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  59) 
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  60) 	struct iphdr * ip_header = (struct iphdr *)datagram;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  61) 	
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  62) 	struct tcphdr * tcp_header = (struct tcphdr *)(datagram + sizeof(struct ip));
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  63) 	struct sockaddr_in sin;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  64) 	struct pseudo_header psh;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  65) 
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  66) 	data = datagram + sizeof(struct iphdr) + sizeof(struct tcphdr);
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  67) 	strcpy(data, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  68) 
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  69) 	strcpy(source_ip, "127.0.0.1");
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  70) 	sin.sin_family = AF_INET;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  71) 	sin.sin_port = htons(80);
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  72) 	sin.sin_addr.s_addr = inet_addr("1.2.3.4");
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  73) 
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  74) 	ip_header->ihl = 5;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  75) 	ip_header->version = 4;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  76) 	ip_header->tos = 0;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  77) 	ip_header->tot_len = sizeof(struct iphdr) + sizeof(struct tcphdr) + strlen(data);
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  78) 	ip_header->id = htonl(54321);
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  79) 	ip_header->frag_off = 0;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  80) 	ip_header->ttl = 255;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  81) 	ip_header->protocol = IPPROTO_TCP;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  82) 	ip_header->check = 0;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  83) 	ip_header->saddr = inet_addr(source_ip);
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  84) 	ip_header->daddr = sin.sin_addr.s_addr;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  85) 	ip_header->check = Checksum((unsigned short *)datagram, ip_header->tot_len);
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  86) 
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  87) 	tcp_header->source = htons(1234);
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  88) 	tcp_header->dest = htons(80);
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  89) 	tcp_header->seq = 0;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  90) 	tcp_header->ack_seq = 0;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  91) 	tcp_header->doff = 5;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  92) 	tcp_header->fin = 0;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  93) 	tcp_header->syn = 1;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  94) 	tcp_header->rst = 0;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  95) 	tcp_header->psh = 0;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  96) 	tcp_header->ack = 0;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  97) 	tcp_header->urg = 0;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  98) 	tcp_header->window = htons(5840);
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500  99) 	tcp_header->check = 0;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500 100) 	tcp_header->urg_ptr = 0;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500 101) 
+c33ee962d0 (Mason Reed Hyman 2022-11-09 22:48:32 -0500 102) 	psh.source_addr = inet_addr(source_ip);
+c33ee962d0 (Mason Reed Hyman 2022-11-09 22:48:32 -0500 103) 	psh.dest_addr = sin.sin_addr.s_addr;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500 104) 	psh.placeholder = 0;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500 105) 	psh.protocol = IPPROTO_TCP;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500 106) 	psh.tcp_length = htons(sizeof(struct tcphdr) + strlen(data));
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500 107) 
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500 108) 	int psize = sizeof(struct pseudo_header) + sizeof(struct tcphdr) + strlen(data);
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500 109) 	pseudogram = malloc(psize);
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500 110) 
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500 111) 	memcpy(pseudogram, (char *) &psh, sizeof(struct pseudo_header));
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500 112) 	memcpy(pseudogram + sizeof(struct pseudo_header), tcp_header, sizeof(struct tcphdr) + strlen(data));
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500 113) 
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500 114) 	tcp_header->check = Checksum((unsigned short *)pseudogram, psize);
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500 115) 
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500 116) 	int one = 1;
+c33ee962d0 (Mason Reed Hyman 2022-11-09 22:48:32 -0500 117) 	const int *val = &one;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500 118) 
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500 119) 	if (setsockopt (s, IPPROTO_IP, IP_HDRINCL, val, sizeof(one)) < 0) {
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500 120) 		perror("Error setting IP_HDRINCL");
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500 121) 		exit(1);
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500 122) 	}
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500 123) 
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500 124) 	/* Send Packet */
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500 125) 	if (sendto(s, datagram, ip_header->tot_len, 0, (struct sockaddr *) &sin, sizeof(sin)) < 0) {
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500 126) 		perror("Sento failed");
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500 127) 		exit(1);
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500 128) 	} else {
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500 129) 		printf("Packet Send. Length: %d\n", ip_header->tot_len);
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500 130) 	}
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500 131) 
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500 132) 	return 0;
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500 133) }
+2d09a40f00 (Mason Hyman      2022-11-09 22:42:07 -0500 134) 
