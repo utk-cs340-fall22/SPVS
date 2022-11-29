@@ -1,0 +1,14 @@
+spvs_server/app.js:
+c54d700530 (Ankit Mistry  2022-11-25 20:24:20 -0500  26) app.get("/download", function(req, res) {
+c54d700530 (Ankit Mistry  2022-11-25 20:24:20 -0500  27)     res.download("output.txt");
+c54d700530 (Ankit Mistry  2022-11-25 20:24:20 -0500  28) })
+c54d700530 (Ankit Mistry  2022-11-25 20:24:20 -0500  29) 
+
+spvs_server/index.html:
+c54d700530 (Ankit Mistry  2022-11-25 20:24:20 -0500  48) 
+c54d700530 (Ankit Mistry  2022-11-25 20:24:20 -0500  49)     <form action="/download">
+c54d700530 (Ankit Mistry  2022-11-25 20:24:20 -0500  50)       <button id="download-btn" type="submit" class="search-button" disabled>Download Results</button>
+c54d700530 (Ankit Mistry  2022-11-25 20:24:20 -0500  51)     </form>
+
+spvs_server/public/javascript/index.js:
+c54d700530 (Ankit Mistry  2022-11-25 20:24:20 -0500  47)             document.getElementById("download-btn").disabled = false;
