@@ -1,0 +1,163 @@
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500  1) ![](https://raw.githubusercontent.com/masonhyman-school/spvs/main/spvs_server/public/images/spvs-high-resolution-logo2.png?token=GHSAT0AAAAAAB3XYLHGM2Y3DDICSRCCUACSY4HPP7Q)
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500  2)
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500  3) # SPVS - Simple Port and Vulnerability Scanner
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500  4)
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500  5) ## Contributors 👨‍💻
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500  6) * Ankit Mistry - GithubID: ankitm28
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500  7) * Cody Blankenship - GithubID: codyb42
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500  8) * Mason Hyman - GithubID: masonhyman-school
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500  9) * Saish Malluri - GithubID: smalluri
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500 10) * Shivam Mistry - GithubID: smistry4
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500 11)
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500 12) ## Product Description ℹ️
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500 13) As the name states, SPVS is a easy-to-use port scanning utility. Available both as a CLI tool for UNIX machines and as a web service, SPVS seeks to make port scanning and identification as easy as possible. Users may either specifiy targets to SPVS or upload a file with a list of targets to begin scanning. Once scanning has begun, SPVS will compile the open ports on the specified target machines as well as the service running. This information is then printed to the user in a modular format.
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500 14)
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500 15) ## Install ⬇️
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500 16) Because our project is broken into two primary parts, web and CLI, there are two seperate install procedures. In order to install the SPVS server, **the SPVS CLI must be installed first!**
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500 17)
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500 18) ### SPVS CLI
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500 19) SFML - This project uses the SFML library to function. In order to use SPVS, SFML must be installed as follows.
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500 20)
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500 21) 1. Clone the SPVS repository at [https://github.com/masonhyman-school/spvs.git](https://github.com/masonhyman-school/spvs.git).
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500 22) 2. Inside this directory, navigate to spvs/spvs_cli. After you are in this location, clone the SFML library at [https://github.com/masonhyman-school/spvs.git](https://github.com/masonhyman-school/spvs.git)
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500 23) 3. Once cloned, SFML will need to be built according to this tutorial: [Building SFML using CMake](https://www.sfml-dev.org/tutorials/2.5/compile-with-cmake.php)
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500 24) 4. After SFML has been correctly installed, use the Makefile in spvs_cli to compile the project.
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500 25) 5. A working binary will be created in bin/spvs and can be run in the spvs_cli directory using `bin/spvs`
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500 26) 6. Without any arguments, SPVS will automatically print the usage.
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500 27)
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500 28) ### SPVS SERVER
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500 29)
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500 30)
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500 31)
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500 32) ## Usage 🛠
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500 33)
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500 34) ### SPVS CLI
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500 35) In order to access usage of SPVS execute `bin/spvs` from the spvs_cli directory. **Important:** when using SPVS CLI you must remain in the cli directory in order for the SFML library to be appropriately accessed and compiled.
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500 36)
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500 37) If using the file specification feature, hostnames must be seperated in the file by a space or an return.
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500 38)
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500 39) Port scanning can be specified by a single port or a range of ports by doing `bin/spvs -p start-end hostname`. It is important to note that flag arguments must come directly after the flag itself.
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500 40)
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500 41) ## Licenses 📑
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500 42) All license infomation may be found at `spvs/LICENSE.txt`
+823aa9100f (Mason Hyman 2022-11-30 11:31:48 -0500 43
+
+)
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500   1) #include <stdio.h>
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500   2) #include <stdlib.h>
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500   3) #include <string.h>
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500   4) 
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500   5) #define MAXLINELEN 50
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500   6) 
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500   7) void PrintUsage() {
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500   8) 	printf("Usage: [COMMAND] {ARGUMENT}\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500   9) 	printf("AVAILABLE COMMANDS: \n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  10) 	printf("   set - sets a specfic field.\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  11) 	printf("   example {tcp | ip} - shows example headers\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  12) }
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  13) 
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  14) void PrintTCP(int example) {
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  15) 	if (example) {
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  16) 		/* Print the example TCP header */
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  17) 		printf("<--------------------------------- 32 Bits ------------------------------->\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  18) 		printf("|-------------------------------------------------------------------------|\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  19) 		printf("|            Source Port               |         Destination Port         |\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  20) 		printf("|-------------------------------------------------------------------------|\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  21) 		printf("|                             Sequence Number                             |\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  22) 		printf("|-------------------------------------------------------------------------|\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  23) 		printf("|                          Acknowledgement Number                         |\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  24) 		printf("|-------------------------------------------------------------------------|\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  25) 		printf("|   Data   |               |U|A|P|R|S|F|                                  |\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  26) 		printf("|  Offset  |    Reserved   |R|C|S|S|Y|I|            Window Size           |\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  27) 		printf("|          |               |G|K|H|T|N|N|                                  |\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  28) 		printf("|-------------------------------------------------------------------------|\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  29) 		printf("|              Checksum                |           Urgent Pointer         |\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  30) 		printf("|-------------------------------------------------------------------------| __\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  31) 		printf("|                                                                         | |\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  32) 		printf("|                                                                         | |\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  33) 		printf("|                                   Options                               | 40 Bytes\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  34) 		printf("|                                                                         | |\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  35) 		printf("|                                                                         | |\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  36) 		printf("|-------------------------------------------------------------------------| __\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  37) 		printf("|                                                                         |\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  38) 		printf("|                                                                         |\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  39) 		printf("|                                    Data                                 |\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  40) 		printf("|                                                                         |\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  41) 		printf("|                                                                         |\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  42) 		printf("|-------------------------------------------------------------------------|\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  43) 	} else {
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  44) 		// Print current TCP header.
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  45) 	}
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  46) }
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  47) 
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  48) void PrintIP(int example) {
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  49) 	if(example) {
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  50) 		/* Print the example IP header */
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  51) 		printf("<--------------------------------- 32 Bits ------------------------------->\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  52) 		printf("|-------------------------------------------------------------------------| __\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  53) 		printf("| Version |   IHL   |       TOS        |            Total Length          | |\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  54) 		printf("|-------------------------------------------------------------------------| |\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  55) 		printf("|             Identification           |  Flags  |     Fragment Offset    | |\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  56) 		printf("|-------------------------------------------------------------------------| 20 Bytes\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  57) 		printf("|       TTL         |     Protocol     |          Header Checksum         | |\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  58) 		printf("|-------------------------------------------------------------------------| |\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  59) 		printf("|                               Source Addresss                           | |\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  60) 		printf("|-------------------------------------------------------------------------| |\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  61) 		printf("|                             Destination Addresss                        | |\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  62) 		printf("|-------------------------------------------------------------------------| __\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  63) 		printf("|                                                                         | |\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  64) 		printf("|                                                                         | |\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  65) 		printf("|                                   Options                               | 40 Bytes\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  66) 		printf("|                                                                         | |\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  67) 		printf("|                                                                         | |\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  68) 		printf("|-------------------------------------------------------------------------| __\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  69) 		printf("|                                                                         | |\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  70) 		printf("|                                                                         | |\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  71) 		printf("|                                     Data                                | Up to 65515 Bytes\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  72) 		printf("|                                                                         | |\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  73) 		printf("|                                                                         | |\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  74) 		printf("|-------------------------------------------------------------------------| __\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  75) 	} else {
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  76) 		// Print current IP header.
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  77) 	}
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  78) }
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  79) 
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  80) int main() {
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  81) 	printf("Welcome to pktbldr 1.0, a tool to build custom raw TCP/IP packets.\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  82) 	printf("To see usage type 'help' or 'h'\n\n");	
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  83) 
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  84) 	char * input = (char *)malloc(MAXLINELEN * sizeof(char));
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  85) 	while(1) {
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  86) 		/* Print prompt */
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  87) 		printf("pktbldr >>> ");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  88) 		
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  89) 		if (fgets(input, MAXLINELEN, stdin) == NULL) {
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  90) 			continue;
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  91) 		}
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  92) 		
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  93) 		input[strlen(input) - 1] = '\0';
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  94) 
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  95) 		/* Main input switch */
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  96) 		char * command = strtok(input, " ");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  97) 		if (!strcmp(command, "help") || !strcmp(command, "h")) {
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  98) 			PrintUsage();
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500  99) 		} 
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500 100) 		else if (!strcmp(command, "example")) {
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500 101) 			char * argument = strtok(NULL, " ");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500 102) 			if (!strcmp(argument, "tcp")) {
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500 103) 				PrintTCP(1);
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500 104) 			}
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500 105) 			else if (!strcmp(argument, "ip")) {
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500 106) 				PrintIP(1);
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500 107) 			}
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500 108) 		} else if (!strcmp(command, "quit") || !strcmp(command, "exit")) {
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500 109) 			break;
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500 110) 		} else {
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500 111) 			fprintf(stderr, "Invalid input. Type 'help' or 'h' to see commands.\n");
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500 112) 			continue;
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500 113) 		}
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500 114) 	}
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500 115) 
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500 116) 	/* Free memory */
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500 117) 	free(input);
+78e3b852cb (Mason Hyman 2022-11-30 14:47:52 -0500 118) }
