@@ -1,0 +1,125 @@
+spvs/spvs_server/app.js
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  10) const fs = require("fs");
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  12) const fileUpload = require("express-fileupload");
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  13) const path = require("path");
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  17) app.use(express.json());
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  44)             if (createFile(stdout)) {
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  45)                 var formattedResponse = processOutputFile();
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  46)                 console.log(formattedResponse);
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  47)             }
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  48)             const jsonRes = JSON.stringify(formattedResponse);
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  49)             res.end(jsonRes);
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  51)     } else if (count == 2) {
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  57)             if (createFile(stdout)) {
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  58)                 var formattedResponse = processOutputFile();
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  59)                 console.log(formattedResponse);
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  60)             }
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  61)             const jsonRes = JSON.stringify(formattedResponse);
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  62)             res.end(jsonRes);
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  63)         });
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  64)     } 
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  65) });
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  66) 
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  67) app.post("/upload", fileUpload({ createParentPath: true }), function(req, res) {
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  68)     
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  69)     const files = req.files;
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  70) 
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  71)     if (!files && Object.keys(files).length === 0) {
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  72)         return res.send({
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  73)             status: false,
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  74)             message: 'no file uploaded'
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  77)     console.log(files);
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  78) 
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  79)     Object.keys(files).forEach(key => {
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  80)         const filePath = path.join(__dirname + "../spvs_cli/uploads/" + files[key].name);
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  81)         files[key].mv(filePath, function(err) {
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  82)             if (err) return res.status(500).send(err);
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  83)         });
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  84)         console.log('file moved');
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  85)         const child = cp.execFile('../spvs_cli/bin/spvs', ['-f', filePath], {cwd: '../spvs_cli'}, (error, stdout, stderr) => {
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  86)             if (error) {
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  87)                 throw error;
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  88)             }
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  89)             console.log(stdout);
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  90)             if (createFile(stdout)) {
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  91)                 var formattedResponse = processOutputFile();
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  92)                 console.log(formattedResponse);
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  93)             }
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  94)             const jsonRes = JSON.stringify(formattedResponse);
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  95)             return res.json(jsonRes);
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  96)         });
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  97)     });
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 105) 
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 106) function createFile(contents) {
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 107)     const fileName = "output.txt";
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 108)     
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 109)     try {
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 110)         fs.writeFileSync(fileName, contents);
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 111)         console.log(`${fileName} changed.`);
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 112)     } catch(err) {
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 113)         console.log(err);
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 114)         return 0;
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 115)     }
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 116)     return 1;
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 117) }
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 118) 
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 119) function processOutputFile() {
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 120)     var rv = {};
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 121)     let i = 0;
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 122)     const fileName = "output.txt";
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 123)     const fileContents = fs.readFileSync(fileName, 'utf-8');
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 124)     fileContents.split(/\r?\n/).forEach(line => {
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 125)         if(line.length !== 0) {
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 126)             rv[i.toString()] = line;
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 127)             i++;
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 128)         }
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 129)     });
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 130) 
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 131)     return rv;
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 132) }
+
+spvs/spvs_server/public/javascript/index.js
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  18) let form = document.getElementById('search_form');
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  19) form.addEventListener('submit', (event) => {
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500  20)     event.preventDefault();
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 102) const fuform = document.getElementById('fileUploadForm');
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 103) const fSend = async() => {
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 105)     const myFile = document.getElementById('myFile').files;
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 106)     const formData = new FormData();
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 108)     Object.keys(myFile).forEach(key => {
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 109)         formData.append(myFile.item(key).name, myFile.item(key));
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 110)     });
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 111)     console.log(formData);
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 112) 
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 113)     const response = await fetch('http://localhost:3000/upload', {
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 114)         method: 'POST',
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 115)         body: formData
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 116)     });
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 117) 
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 118)     const json = await response.json();
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 120)     searchBox('search_div');
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 160)     document.getElementById("download-btn").disabled = false;
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 165) 
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 166)     console.log(json);
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 167) }
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 168) 
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 169) fuform.addEventListener('submit', (e) => {
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 170)     e.preventDefault();
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 171)     fSend();
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 172) });
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 173) 
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 174) 
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 175) 
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 176) function unlock_filter(check_ID, input_ID){
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 188)     if(input.value[0] >= '9' || input.value[0] < '0' || input.value[input.value.length-1] >= '9' || input.value[input.value.length-1] < '0' ) {
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 189)         if(input.value[0] >= '9' || input.value[0] < '0') input.setSelectionRange(0, 1);
+
+spvs/spvs_server/index.html
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 40)       </form>
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 41)       <div style = "text-align: center;">
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 42)         <form id="fileUploadForm" method="POST" enctype="multipart/form-data">
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 44)           <button id="two" class="search-button" type="submit">File Upload</button>
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 47)     </div>
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 67)     
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 79)     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+dd6ee76b0f (Shivam Mistry 2022-11-24 20:38:40 -0500 80)     <script src = "javascript/index.js"></script>
