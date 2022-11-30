@@ -7,7 +7,7 @@ Product Name: Simple Port and Vulnerability Scanner (SPVS)
 Professionals in Information Security sector often need to scan target or range of targets, to check for anomalies. SPVS with its CLI and web version provides a way for these professionals to scan range of targets, with little to no-setup while being fully open-source.
 
 ## Project Overview
-Simple Port and Vulnerability Scanner (SPVS) is an easy-to-use network scanner. As mentioned, there will be two ways to access the SPVS tool, either on command line, or through web. The SPVS tool will be able to handle the target information either via a manual text entry, or a file. File option is usually better to scan several different targets. After scanning the targets based on user specifications, the tool will display concise and easy to interpret output. The scanner will be able to determine status of the target, open/close ports, and their known vulnerabilities.
+Simple Port and Vulnerability Scanner (SPVS) is an easy-to-use network scanner. As mentioned, there will be two ways to access the SPVS tool, either on command line, or through web. The SPVS tool will be able to handle the target information either via a manual text entry, or a file. File option is usually better to scan several different targets. After scanning the targets based on user specifications, the tool will display concise and easy to interpret output. The scanner will be able to determine status of the target, open/close ports, and their known vulnerabilities.   
 The main difference between the CLI and web version is that the web version is accessible anywhere to scan targets over a network, while CLI version allows to scan locally as well as over a network. CLI version is best suited for developers. The tool, however, is not intended for wide range corporate network scans.
 
 ## Features
@@ -21,6 +21,6 @@ The main difference between the CLI and web version is that the web version is a
 8. **Download Results.** As a website user, I want to download result, so that I can reference it later.
 
 ## Technologies to be used
-**SPVS CLI TOOL:** C/C++
-**SPVS WEB FRONTEND:** Html, Css, JavaScript, Bootstrap, jQuery, React
-**SPVS WEB BACKEND:** NodeJS, ExpressJS
+**SPVS CLI TOOL:** C/C++   
+**SPVS WEB FRONTEND:** Html, Css, JavaScript, Bootstrap, jQuery, React   
+**SPVS WEB BACKEND:** NodeJS, ExpressJS   
