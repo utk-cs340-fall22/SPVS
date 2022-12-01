@@ -1,0 +1,198 @@
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500   8) 	font-size: 2em;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  11)  	transition: all .25s ease;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  12) }
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  13) #download-btn {
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  14) 	background-color: white;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  15) 	 border: 1px solid white;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  16) 	 padding: 10px;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  17) 	 font-size: 2em;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  18) 	 color: white;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  21) 	color: #50A060;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  22) 	border: 1px solid #50A060;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  23) 	background-color: white;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  24) 	transition: all .25s ease;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  25)   }
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  26) #download-btn:hover{
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  29)   background-color: #50A060;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  30)   transition: all .25s ease;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  34) 	font-size:2em; 
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  44) 	width: 70%;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  53)   }
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  54)   .modal {
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  55)     position: fixed;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  56)     left: 0;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  57)     top: 0;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  58)     width: 100%;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  59)     height: 100%;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  60)     background-color: rgba(0, 0, 0, 0.5);
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  61)     opacity: 0;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  62)     visibility: hidden;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  63)     transform: scale(1.1);
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  64)     transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  65) }
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  66) 
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  67) .modal-content {
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  68)     position: absolute;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  69)     top: 50%;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  70)     left: 50%;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  71)     transform: translate(-50%, -50%);
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  72)     background-color: white;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  73)     padding: 1rem 1.5rem;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  74)     width: 24rem;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  75)     border-radius: 0.5rem;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  76) }
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  77) 
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  78) .close-button {
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  79)     float: right;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  80)     width: 1.5rem;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  81)     line-height: 1.5rem;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  82)     text-align: center;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  83)     cursor: pointer;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  84)     border-radius: 0.25rem;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  85)     background-color: #4CAF50;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  86) 	color: white;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  87) }
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  88) 
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  89) .close-button:hover {
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  90)     background-color: #a4e9a6;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  91) }
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  92) 
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  93) .show-modal {
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  94)     opacity: 1;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  95)     visibility: visible;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  96)     transform: scale(1.0);
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  97)     transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  98) }
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  99) .trigger {
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 100) 	background-color: #50A060;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 101) 	 border: 1px solid #50A060;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 102) 	 padding: 10px;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 103) 	 font-size: 14pt;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 104) 	 color: white;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 105) 	transition: all .25s ease;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 106) }
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 107) .trigger:hover{
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 108) 	color: #50A060;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 109) 	border: 1px solid #50A060;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 110) 	background-color: white;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 111) }
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 112) .form-inline {  
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 113) 	display: flex;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 114) 	flex-flow: row wrap;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 115) 	align-items: center;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 14)   <body style="background-color: #50A060; margin:0; padding: 0;">
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 15)     <div style="background-color: white; height: 100%; min-height: 75em; max-width: 66%; margin: auto; padding-top: 0px; margin-top: 0px;">
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 17)     <img src = "images/spvs-high-resolution-logo2.png" class = "title">
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 21)     <div id = "search_div" style="padding-top: 50px; text-align: center;">
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 24)         <button class= "trigger" style="width:5%;">?</button>
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 25)         <input id = "search" class="search-box" type="text" name="hostName" placeholder="Enter a hostname" style="width: 70%; height: 1.5em;">
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 27)         <span style = "color: red; text-align: center;" id = searchError></span>
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 35)           <span style = "color: red; text-align: center;" id = portError></span>
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 39)         <h3 style = "text-align: center; padding: 25px;"> OR </h3>
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 43)           <input class="choose_file" type="file" name="upFile" id="myFile" style = "padding-bottom: 20px;";/>
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 48)     <div class="modal">
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 49)         <div class="modal-content">
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 50)             <span class="close-button" onclick="toggleModal()">x</span>
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 51)             <h1 style = "color: #50A060;"><u>Help</u></h1>
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 52)             <h2>Enter a host name</h2>
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 53)             <p>A host, or website, on the Internet is identified by a host name, such as <strong>www.example.com</strong>. Host names are sometimes called domain names. Host names are mapped to IP addresses such as <strong>255.255.255.255</strong>, but a host name and an IP address do not have a one-to-one relationship. To learn more about host names, <a href = "https://www.ibm.com/docs/en/cics-ts/5.3?topic=concepts-host-names" style = "color: #50A060;">click here</a>!
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 54)             <br>
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 55)             
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 56)             <h4>Input formats include:</h4>
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 57)             <ul>
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 58)               <li>domain name - www.example.com</li>
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 59)               <li>IP address - 255.255.255.255</li>
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 60)               <li>localhost (this is your machine!)</li>
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 61)             </ul>
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 62)             </p>
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 63)             <h2>Port Scan</h2>
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 64)             <p>A port is a virtual point where network connections start and end. Ports are software-based and managed by a computer's operating system. Ports are standardized across all network-connected devices, with each port assigned a number. Most ports are reserved for certain protocols — for example, all Hypertext Transfer Protocol (HTTP) messages go to port 80. While IP addresses enable messages to go to and from specific devices, port numbers allow targeting of specific services or applications within those devices. To learn more <a href = "https://www.cloudflare.com/learning/network-layer/what-is-a-computer-port/" style = "color: #50A060;">click here</a>!</p>
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 65)         </div>
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 66)     </div>
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 68)     <div id = "loading" style = "display: none">
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 69)       <img src = "images/loading.gif" style="width: 150px; padding-top: 25px;">
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 70)     </div>
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 71)     <div style = "padding-bottom: 30px;"></div>
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 72)     <div id = "results" style = "text-align: center; display: none; margin:auto; width: 70%;">
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 73)       <form action="/download" class = "form-inline">
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 74)         <button id="download-btn" type="submit" style = " margin-left: 40%; background-color: white;" disabled>📥</button>
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 75)         <h1 style = "text-decoration: underline;">Results</h1>
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 76)       </form>
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 77)       <div id = "results_here" style="display: inline-block; text-align: left;"></div>
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 78)     </div>
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 81)   </div>
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500   4)     //document.getElementById("loading").innerHTML ="<p>Fetching Results...</p>";
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500   5)     document.getElementById("loading").style.display = "block";
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500   6)     document.getElementById("loading").style.visibility = "visible";
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500   7)     document.getElementById("results_here").innerHTML ="";
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500   8)     document.getElementById("results").style.display = "none";
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  10) 
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  14)     document.getElementById("loading").style.display = "none";
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  15)     document.getElementById("loading").style.visibility = "hidden";
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  52)             var results = document.getElementById("results_here");
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  53) 
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  54)             const res = JSON.parse(data);
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  55)             var i;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  58)             for(key in res){
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  91)             }
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  93)             document.getElementById("results").style.display = "block";
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500  97)             document.getElementById("results_here").innerHTML = "No results found";
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 119)     /************************************************************ */
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 121)     var results = document.getElementById("results_here");
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 122)     const res = JSON.parse(json);
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 123)     var i;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 161)     document.getElementById("results").style.display = "block";
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 162)     //document.getElementById("results").innerHTML = json;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 163)     //document.getElementById("download-btn").disabled = false;
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 164)     //document.getElementById("download-btn").style.display = "block";
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 212) }
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 213) const modal = document.querySelector(".modal");
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 214) const trigger = document.querySelector(".trigger");
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 215) const closeButton = document.querySelector(".close-button");
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 216) 
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 217) function toggleModal() {
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 218)     modal.classList.toggle("show-modal");
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 219) }
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 220) 
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 221) function windowOnClick(event) {
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 222)     if (event.target === modal) {
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 223)         toggleModal();
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 224)     }
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 225) }
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 226) 
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 227) trigger.addEventListener("click", toggleModal);
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 228) trigger.
+03705a5b00 (codyb42       2022-11-28 13:54:19 -0500 229) window.addEventListener("click", windowOnClick);
+8a198ddab4 (codyb42       2022-11-28 15:08:07 -0500  56)             var is_table = false;
+8a198ddab4 (codyb42       2022-11-28 15:08:07 -0500  57)             var table = document.createElement("table");
+8a198ddab4 (codyb42       2022-11-28 15:08:07 -0500  59)                 var partsArray = res[key].split(' ');
+8a198ddab4 (codyb42       2022-11-28 15:08:07 -0500  60)                 if(is_table){
+8a198ddab4 (codyb42       2022-11-28 15:08:07 -0500  61)                     if(partsArray[0] == "SPVS"){
+8a198ddab4 (codyb42       2022-11-28 15:08:07 -0500  62)                         is_table = false; 
+8a198ddab4 (codyb42       2022-11-28 15:08:07 -0500  63)                         results.appendChild(table);
+8a198ddab4 (codyb42       2022-11-28 15:08:07 -0500  64)                     } else {
+8a198ddab4 (codyb42       2022-11-28 15:08:07 -0500  65)                         var x = document.createElement("tr");
+8a198ddab4 (codyb42       2022-11-28 15:08:07 -0500  66)                         for(var y = 0; y < partsArray.length; y++){
+8a198ddab4 (codyb42       2022-11-28 15:08:07 -0500  67)                             var z = document.createElement("td");
+8a198ddab4 (codyb42       2022-11-28 15:08:07 -0500  68)                             z.innerHTML = partsArray[y];
+8a198ddab4 (codyb42       2022-11-28 15:08:07 -0500  69)                             x.appendChild(z);
+8a198ddab4 (codyb42       2022-11-28 15:08:07 -0500  70)                         }
+8a198ddab4 (codyb42       2022-11-28 15:08:07 -0500  71)                         table.appendChild(x);
+8a198ddab4 (codyb42       2022-11-28 15:08:07 -0500  72)                     }
+8a198ddab4 (codyb42       2022-11-28 15:08:07 -0500  73)                 }
+8a198ddab4 (codyb42       2022-11-28 15:08:07 -0500  74)                 if(!is_table) {
+8a198ddab4 (codyb42       2022-11-28 15:08:07 -0500  75)                     if(partsArray[0] == "PORT"){
+8a198ddab4 (codyb42       2022-11-28 15:08:07 -0500  76)                         var x = document.createElement("tr");
+8a198ddab4 (codyb42       2022-11-28 15:08:07 -0500  77)                         for(var y = 0; y < partsArray.length; y++){
+8a198ddab4 (codyb42       2022-11-28 15:08:07 -0500  78)                             var z = document.createElement("th");
+8a198ddab4 (codyb42       2022-11-28 15:08:07 -0500  80)                             z.innerHTML = partsArray[y];
+8a198ddab4 (codyb42       2022-11-28 15:08:07 -0500  81)                             x.appendChild(z);
+8a198ddab4 (codyb42       2022-11-28 15:08:07 -0500  82)                         }
+8a198ddab4 (codyb42       2022-11-28 15:08:07 -0500  83)                         table.appendChild(x);
+8a198ddab4 (codyb42       2022-11-28 15:08:07 -0500  84)                         is_table = true;
+8a198ddab4 (codyb42       2022-11-28 15:08:07 -0500  85)                     } else {
+8a198ddab4 (codyb42       2022-11-28 15:08:07 -0500  86)                         i = document.createElement('p');
+8a198ddab4 (codyb42       2022-11-28 15:08:07 -0500  87)                         i.innerText = res[key];
+8a198ddab4 (codyb42       2022-11-28 15:08:07 -0500  88)                         results.appendChild(i);
+8a198ddab4 (codyb42       2022-11-28 15:08:07 -0500  89)                     }
+8a198ddab4 (codyb42       2022-11-28 15:08:07 -0500  90)                 }
