@@ -1,0 +1,26 @@
+spvs/spvs_cli/src/simple_scanner.cpp
+65137a26be (SaishMalluri 2022-11-30 18:47:56 -0500  33)         else if(ports[i]==23)
+65137a26be (SaishMalluri 2022-11-30 18:47:56 -0500  34)         {
+65137a26be (SaishMalluri 2022-11-30 18:47:56 -0500  35)             cout << "Common port: Telnet" << endl;
+65137a26be (SaishMalluri 2022-11-30 18:47:56 -0500  36)         }
+65137a26be (SaishMalluri 2022-11-30 18:47:56 -0500  37) 
+65137a26be (SaishMalluri 2022-11-30 18:47:56 -0500  53)         else if(ports[i]==110)
+65137a26be (SaishMalluri 2022-11-30 18:47:56 -0500  54)         {
+65137a26be (SaishMalluri 2022-11-30 18:47:56 -0500  55)             cout << "Common port: Pop3" << endl;
+65137a26be (SaishMalluri 2022-11-30 18:47:56 -0500  56)         }
+65137a26be (SaishMalluri 2022-11-30 18:47:56 -0500  57) 
+65137a26be (SaishMalluri 2022-11-30 18:47:56 -0500  63)         else if(ports[i]==137)
+65137a26be (SaishMalluri 2022-11-30 18:47:56 -0500  64)         {
+65137a26be (SaishMalluri 2022-11-30 18:47:56 -0500  65)             cout << "Common port: NetBois port" << endl;
+65137a26be (SaishMalluri 2022-11-30 18:47:56 -0500  66)         }
+65137a26be (SaishMalluri 2022-11-30 18:47:56 -0500  67) 
+65137a26be (SaishMalluri 2022-11-30 18:47:56 -0500  68)         else if(ports[i]==143)
+65137a26be (SaishMalluri 2022-11-30 18:47:56 -0500  69)         {
+65137a26be (SaishMalluri 2022-11-30 18:47:56 -0500  70)             cout << "Common port: IMAP port" << endl;
+65137a26be (SaishMalluri 2022-11-30 18:47:56 -0500  71)         }
+65137a26be (SaishMalluri 2022-11-30 18:47:56 -0500  72) 
+65137a26be (SaishMalluri 2022-11-30 18:47:56 -0500  73)         else if(ports[i]==161)
+65137a26be (SaishMalluri 2022-11-30 18:47:56 -0500  74)         {
+65137a26be (SaishMalluri 2022-11-30 18:47:56 -0500  75)             cout << "Common port: SNMP" << endl;
+65137a26be (SaishMalluri 2022-11-30 18:47:56 -0500  76)         }
+65137a26be (SaishMalluri 2022-11-30 18:47:56 -0500  77) 

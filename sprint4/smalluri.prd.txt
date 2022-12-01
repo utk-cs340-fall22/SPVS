@@ -1,0 +1,46 @@
+Product Requirements Document
+Name: Saish Malluri
+
+* Product Name: Simple Port and Vulnerability Scanner (SPVS)
+
+* Background
+There is a cyberattack every 39 seconds! In today's day and age, security is such an important issue
+and people would like the best protection against these crimes. To ensure that their computer is in
+safe hands and to check and see if there are any existing vulnerabilites on their computer, SPVS is
+a simplified port and vulnerability scanner which checks for any ports on your computer that might have 
+any kinds of vulnerabilities. This software is easy to use and has a user-friendly front-end, which
+makes it a great tool to use.
+
+
+* Product Overview
+Simple Port and Vulnerability Scanner (SPVS) is an easy-to-use network scanner.
+There are two ways in which you can use the tool and they are: through command line or through web. There are
+multiple ways in which scanning can take place. There is a default scanning option which only scans the 1000
+most common ports. Another option is that users can scan an individual port or IP address as well as a range of
+ports or IP addresses. The user can also provide a file with IP addresses that that they would like to be
+scanned; this is particularly useful when you have many addresses. After taking in all the required info, the
+tool scans the addresses and ports, and the tool will display information such as the status of the
+target, open/close ports, and their known vulnerabilities.
+
+* Features
+-Scanning a certain range of ports on a target/address: As a software developer, I would like to scan a specified
+range of ports, so that I can get information just on those ports.
+- Scanning a target/address: As a developer, I would like to scan an target/address, so that I can check
+and see if it is online.
+- Scanning multiple targets/addresses using a file: As a developer, I would like to scan multiple
+targets/addresses, so that I can be efficient and scan many of them at one time.
+- Scanning a specific port: As a developer, I would like to scan a specific port with a corresponding address,
+so that I can check and see if there are any vulnerabilites by any chance.
+- Easy to use web front end for non-technical individuals: As a retail owner, I use my computer a lot for
+business purposes, and I need a tool, so that I can check for exisiting vulnerabilties.
+- Downloading Results: As a web user, I would like to download and save the results, so that I can view them at
+any time.
+- Help button: As someone who does not have that much experience with technology or the tool, I would like to
+learn how to use the SPVS tool thoroughly, so that I can better understand and have an easy time with it.
+-Default option: Scanning top 1000 common ports: As a developer, I would like to only scan the most common
+ports, so that I can be efficient and have a quick and easy scan
+
+* Technologies
+-SPVS CLI TOOL: C/C++   
+-SPVS WEB FRONTEND: HTML, CSS, JavaScript, Bootstrap, jQuery, React   
+-SPVS WEB BACKEND: NodeJS, ExpressJS   
